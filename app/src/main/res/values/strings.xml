@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Notes</string>
+    <string name="start_typing">Start typing…</string>
+    <string name="title">Title</string>
+    <string name="add_note">Add note</string>
+    <string name="back">Back</string>
+    <string name="settings">Settings</string>
+    <string name="order">Order</string>
+    <string name="no_content">No content</string>
+    <string name="recover">Recover</string>
+    <string name="date_format_pattern">MMMM dd, yyyy HH:mm ZZZZ</string>
+    <string name="delete">Delete</string>
+    <string name="deleted_notes">Deleted Notes</string>
+    <string name="timestamp">Timestamp</string>
+    <string name="save_note">Save Note</string>
+    <string name="your_note">Your notes</string>
+    <string name="select_item">Select item</string>
+    <string name="another_notes_order">Another notes order</string>
+    <string name="cancel">Cancel</string>
+    <string name="error">Error</string>
+    <string name="delete_all_notes">Delete all notes?</string>
+    <string name="cant_open_deleted_notes">You can\'t open deleted notes</string>
+    <string name="appearance">Appearance</string>
+    <string name="theme_color">Theme Color</string>
+    <string name="text_size">Text size</string>
+    <string name="card_form">Card form</string>
+    <string name="app_theme">App theme</string>
+    <string name="another">Another</string>
+    <string name="about_app">About app</string>
+    <string name="github_repository">Github repository</string>
+</resources>
