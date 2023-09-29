@@ -21,7 +21,7 @@ fun DeletedNotesTopAppBar(
     TopAppBar(
         title = {
             Text(
-                text = stringResource(id = R.string.deleted_notes),
+                text = stringResource(id = R.string.label_deleted_notes),
                 style = MainTheme.typography.header,
             )
         },
@@ -31,7 +31,7 @@ fun DeletedNotesTopAppBar(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow_left),
-                    contentDescription = stringResource(id = R.string.back),
+                    contentDescription = stringResource(id = R.string.btn_back),
                 )
             }
         },
@@ -41,11 +41,11 @@ fun DeletedNotesTopAppBar(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.delete_all),
-                    contentDescription = stringResource(id = R.string.delete_all_notes),
+                    contentDescription = stringResource(id = R.string.msg_delete_all_notes),
                 )
             }
         },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MainTheme.colors.primaryBackground,
             actionIconContentColor = MainTheme.colors.invertColor,
             navigationIconContentColor = MainTheme.colors.invertColor,

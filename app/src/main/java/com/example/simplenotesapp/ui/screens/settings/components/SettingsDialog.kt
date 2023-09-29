@@ -26,15 +26,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.simplenotesapp.R
-import com.example.simplenotesapp.ui.screens.settings.SettingsBundle
+import com.example.simplenotesapp.domain.models.SettingsBundle
+import com.example.simplenotesapp.domain.util.NotesOrder
+import com.example.simplenotesapp.domain.util.SimpleNotesCorners
+import com.example.simplenotesapp.domain.util.SimpleNotesSize
+import com.example.simplenotesapp.domain.util.SimpleNotesStyle
+import com.example.simplenotesapp.ui.screens.MainViewModel
+import com.example.simplenotesapp.ui.screens.notes.MainEvent
 import com.example.simplenotesapp.ui.theme.MainTheme
-import com.example.simplenotesapp.ui.theme.SimpleNotesCorners
-import com.example.simplenotesapp.ui.theme.SimpleNotesSize
-import com.example.simplenotesapp.ui.theme.SimpleNotesStyle
 
 @Composable
 fun SettingsDialog(
+    title: String,
     onCancel: () -> Unit,
     onValue: @Composable () -> Unit
 ) {
@@ -51,6 +56,16 @@ fun SettingsDialog(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
+                Text(
+                    text = title,
+                    style = MainTheme.typography.title,
+                    color = MainTheme.colors.primaryTextColor,
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
                 onValue.invoke()
 
                 TextButton(
@@ -60,7 +75,7 @@ fun SettingsDialog(
                         .padding(end = 16.dp)
                 ) {
                     Text(
-                        text = stringResource(id = R.string.cancel),
+                        text = stringResource(id = R.string.btn_cancel),
                         style = MainTheme.typography.body,
                         color = MainTheme.colors.primaryTextColor
                     )
@@ -78,16 +93,18 @@ fun SettingsCornerStyleDialog(
     onCancel: () -> Unit,
     settingsBundle: SettingsBundle,
     onSettingsChanged: (SettingsBundle) -> Unit,
-){
+) {
     SettingsDialog(
+        title = stringResource(id = R.string.label_card_form),
         onCancel = (onCancel),
         onValue = {
             SimpleNotesCorners.values().onEach { notesCorner ->
                 Button(
                     onClick = {
-                        onSettingsChanged(settingsBundle.copy(cornerStyle = notesCorner)).also {
-                            onCancel.invoke()
+                        if (notesCorner != settingsBundle.cornerStyle) {
+                            onSettingsChanged(settingsBundle.copy(cornerStyle = notesCorner))
                         }
+                        onCancel.invoke()
                     },
                     colors = ButtonDefaults.textButtonColors(
                         containerColor = Color.Unspecified
@@ -111,7 +128,7 @@ fun SettingsCornerStyleDialog(
                                     R.drawable.outline_circle
                                 }
                             ),
-                            contentDescription = stringResource(R.string.select_item),
+                            contentDescription = stringResource(R.string.btn_selected_item),
                             tint = MainTheme.colors.invertColor,
                             modifier = Modifier.size(16.dp)
                         )
@@ -120,8 +137,8 @@ fun SettingsCornerStyleDialog(
 
                         Text(
                             text = notesCorner.name,
-                            style = MainTheme.typography.title,
-                            color = MainTheme.colors.primaryTextColor
+                            style = MainTheme.typography.body,
+                            color = MainTheme.colors.primaryTextColor,
                         )
 
                     }
@@ -136,18 +153,18 @@ fun SettingsStyleDialog(
     onCancel: () -> Unit,
     settingsBundle: SettingsBundle,
     onSettingsChanged: (SettingsBundle) -> Unit,
-){
+) {
     SettingsDialog(
+        title = stringResource(id = R.string.label_theme_color),
         onCancel = (onCancel),
         onValue = {
             SimpleNotesStyle.values().onEach { simpleNotesStyle ->
                 Button(
                     onClick = {
-                        onSettingsChanged(settingsBundle.copy(
-                            style = simpleNotesStyle
-                        )).also {
-                            onCancel.invoke()
+                        if (simpleNotesStyle != settingsBundle.style) {
+                            onSettingsChanged(settingsBundle.copy(style = simpleNotesStyle))
                         }
+                        onCancel.invoke()
                     },
                     colors = ButtonDefaults.textButtonColors(
                         containerColor = Color.Unspecified
@@ -172,7 +189,7 @@ fun SettingsStyleDialog(
                                 }
 
                             ),
-                            contentDescription = stringResource(R.string.select_item),
+                            contentDescription = stringResource(R.string.btn_selected_item),
                             tint = MainTheme.colors.invertColor,
                             modifier = Modifier.size(16.dp)
                         )
@@ -197,18 +214,18 @@ fun SettingsTextSizeDialog(
     onCancel: () -> Unit,
     settingsBundle: SettingsBundle,
     onSettingsChanged: (SettingsBundle) -> Unit,
-){
+) {
     SettingsDialog(
+        title = stringResource(id = R.string.label_text_size),
         onCancel = (onCancel),
         onValue = {
             SimpleNotesSize.values().onEach { simpleNotesSize ->
                 Button(
                     onClick = {
-                        onSettingsChanged(settingsBundle.copy(
-                            textSize = simpleNotesSize
-                        )).also {
-                            onCancel.invoke()
+                        if (simpleNotesSize != settingsBundle.textSize) {
+                            onSettingsChanged(settingsBundle.copy(textSize = simpleNotesSize))
                         }
+                        onCancel.invoke()
                     },
                     colors = ButtonDefaults.textButtonColors(
                         containerColor = Color.Unspecified
@@ -233,7 +250,7 @@ fun SettingsTextSizeDialog(
                                 }
 
                             ),
-                            contentDescription = stringResource(R.string.select_item),
+                            contentDescription = stringResource(R.string.btn_selected_item),
                             tint = MainTheme.colors.invertColor,
                             modifier = Modifier.size(16.dp)
                         )
@@ -246,6 +263,67 @@ fun SettingsTextSizeDialog(
                             color = MainTheme.colors.primaryTextColor
                         )
 
+                    }
+                }
+            }
+        }
+    )
+}
+
+@Composable
+fun SettingsSortDialog(
+    onCancel: () -> Unit,
+    viewModel: MainViewModel = hiltViewModel()
+) {
+    SettingsDialog(
+        title = stringResource(id = R.string.label_order),
+        onCancel = (onCancel),
+        onValue = {
+            NotesOrder.values().onEach { notesOrder ->
+                Button(
+                    onClick = {
+                        if (viewModel.state.value.notesOrder != notesOrder) {
+                            viewModel.onEvent(MainEvent.ChangeNotesOrder(notesOrder))
+                        }
+                        onCancel.invoke()
+                    },
+                    colors = ButtonDefaults.textButtonColors(
+                        containerColor = Color.Unspecified
+                    ),
+                    shape = RectangleShape,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .defaultMinSize(minHeight = 52.dp)
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+
+                        Icon(
+                            painter = painterResource(
+                                id = if (viewModel.state.value.notesOrder == notesOrder) {
+                                    R.drawable.filled_circle
+                                } else {
+                                    R.drawable.outline_circle
+                                }
+
+                            ),
+                            contentDescription = stringResource(R.string.btn_selected_item),
+                            tint = MainTheme.colors.invertColor,
+                            modifier = Modifier.size(16.dp)
+                        )
+
+                        Spacer(modifier = Modifier.width(12.dp))
+
+                        Text(
+                            text = stringResource(
+                                id = notesOrder.stringName
+                            ),
+                            style = MainTheme.typography.title,
+                            color = MainTheme.colors.primaryTextColor
+                        )
                     }
                 }
             }

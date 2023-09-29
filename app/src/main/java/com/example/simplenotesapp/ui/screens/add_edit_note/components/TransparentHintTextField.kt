@@ -1,7 +1,7 @@
 package com.example.simplenotesapp.ui.screens.add_edit_note.components
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,14 +20,13 @@ fun TransparentHintTextField(
     onFocusChange: (FocusState) -> Unit,
     textStyle: TextStyle = TextStyle(),
 ) {
-
-    Box() {
+    Box {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             textStyle = textStyle,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .onFocusChanged {
                     onFocusChange(it)
                 }

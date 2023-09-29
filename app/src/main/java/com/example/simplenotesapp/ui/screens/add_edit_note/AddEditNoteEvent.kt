@@ -13,4 +13,5 @@ sealed interface AddEditNoteEvent {
     data class ChangeContentFocus(val focusState: FocusState) : AddEditNoteEvent
 
     object InsertNote : AddEditNoteEvent
+
 }

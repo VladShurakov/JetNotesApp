@@ -28,7 +28,7 @@ fun AddEditNoteTopAppBar(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow_left),
-                    contentDescription = stringResource(id = R.string.back),
+                    contentDescription = stringResource(id = R.string.btn_back),
                 )
             }
         },
@@ -38,11 +38,11 @@ fun AddEditNoteTopAppBar(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.save),
-                    contentDescription = stringResource(id = R.string.save_note),
+                    contentDescription = stringResource(id = R.string.btn_save_note),
                 )
             }
         },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MainTheme.colors.primaryBackground,
             actionIconContentColor = MainTheme.colors.invertColor,
             navigationIconContentColor = MainTheme.colors.invertColor,

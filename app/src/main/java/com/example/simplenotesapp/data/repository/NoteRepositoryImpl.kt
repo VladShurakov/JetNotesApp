@@ -10,38 +10,41 @@ import kotlinx.coroutines.flow.map
 class NoteRepositoryImpl(private val noteDao: NoteDao) : NoteRepository {
 
     override suspend fun insertNote(note: Note): Long {
-        return noteDao.insertNote(mapToNoteEntity(note))
+        return noteDao.insertNote(mapToNoteEntity(note = note))
     }
 
     override suspend fun getNoteById(id: Long): Note? {
-        return noteDao.getNoteById(id)?.let { mapToNote(it) }
+        return noteDao.getNoteById(id)?.let { note ->
+            mapToNote(noteEntity = note)
+        }
     }
 
     override suspend fun deleteNote(note: Note) {
-        noteDao.deleteNote(mapToNoteEntity(note))
+        noteDao.deleteNote(mapToNoteEntity(note = note))
     }
 
     override fun getNotes(): Flow<List<Note>> {
-        return noteDao.getNotes().map {
-            it.map { noteEntity ->
-                mapToNote(noteEntity)
+        return noteDao.getNotes().map { listOfNoteEntity ->
+            listOfNoteEntity.map { noteEntity ->
+                mapToNote(noteEntity = noteEntity)
             }
         }
     }
-}
 
-private fun mapToNoteEntity(note: Note): NoteEntity {
-    return NoteEntity(
-        title = note.title, content = note.content,
-        timestamp = note.timestamp, inTrash = note.inTrash,
-        id = note.id
-    )
-}
+    private fun mapToNoteEntity(note: Note): NoteEntity {
+        return NoteEntity(
+            title = note.title, content = note.content,
+            timestamp = note.timestamp, deleted = note.deleted,
+            id = note.id
+        )
+    }
 
-private fun mapToNote(noteEntity: NoteEntity): Note {
-    return Note(
-        title = noteEntity.title, content = noteEntity.content,
-        timestamp = noteEntity.timestamp, inTrash = noteEntity.inTrash,
-        id = noteEntity.id
-    )
+    private fun mapToNote(noteEntity: NoteEntity): Note {
+        return Note(
+            title = noteEntity.title, content = noteEntity.content,
+            timestamp = noteEntity.timestamp, deleted = noteEntity.deleted,
+            id = noteEntity.id
+        )
+    }
+
 }

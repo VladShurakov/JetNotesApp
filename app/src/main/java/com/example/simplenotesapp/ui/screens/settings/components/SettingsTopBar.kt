@@ -20,7 +20,7 @@ fun SettingsTopBar(
     TopAppBar(
         title = {
             Text(
-                text = stringResource(id = R.string.settings),
+                text = stringResource(id = R.string.label_settings),
                 style = MainTheme.typography.header
             )
         },
@@ -30,11 +30,11 @@ fun SettingsTopBar(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow_left),
-                    contentDescription = stringResource(id = R.string.back),
+                    contentDescription = stringResource(id = R.string.btn_back),
                 )
             }
         },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MainTheme.colors.primaryBackground,
             titleContentColor = MainTheme.colors.primaryTextColor,
             navigationIconContentColor = MainTheme.colors.invertColor

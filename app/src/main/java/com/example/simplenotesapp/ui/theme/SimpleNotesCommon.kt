@@ -40,18 +40,6 @@ object MainTheme {
         get() = LocalSimpleNotesShape.current
 }
 
-enum class SimpleNotesStyle {
-    Red, Yellow, Green, Purple, Blue
-}
-
-enum class SimpleNotesSize {
-    Small, Normal, Big
-}
-
-enum class SimpleNotesCorners {
-    Rectangular, Rounded
-}
-
 val LocalSimpleNotesColors = staticCompositionLocalOf<SimpleNotesColors> {
     error("No colors provided")
 }

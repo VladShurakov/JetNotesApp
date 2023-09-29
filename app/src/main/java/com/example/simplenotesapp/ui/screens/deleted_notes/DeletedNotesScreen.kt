@@ -2,12 +2,10 @@ package com.example.simplenotesapp.ui.screens.deleted_notes
 
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -23,7 +21,6 @@ import com.example.simplenotesapp.ui.screens.deleted_notes.components.DeletedNot
 import com.example.simplenotesapp.ui.screens.deleted_notes.components.DeletedNotesTopAppBar
 import com.example.simplenotesapp.ui.theme.MainTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeletedNotesScreen(
     navController: NavController,
@@ -34,7 +31,7 @@ fun DeletedNotesScreen(
     val isDeleteAlertDialogOpen = remember {
         mutableStateOf(false)
     }
-    val toastText = stringResource(id = R.string.cant_open_deleted_notes)
+    val toastText = stringResource(id = R.string.msg_cant_open_deleted_notes)
 
     if (isDeleteAlertDialogOpen.value) {
         DeleteAlertDialog(
@@ -57,37 +54,32 @@ fun DeletedNotesScreen(
             )
         }
     ) { padding ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MainTheme.colors.primaryBackground)
+                .padding(padding)
+                .padding(horizontal = 16.dp)
         ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .padding(horizontal = 16.dp)
-            ) {
-                items(state.deletedNotes) { deletedNote ->
-                    DeletedNoteView(
-                        title = deletedNote.title,
-                        content = deletedNote.content,
-                        timestamp = deletedNote.timestamp,
-                        onClick = {
-                            Toast.makeText(
-                                navController.context.applicationContext,
-                                toastText,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        },
-                        onDelete = {
-                            viewModel.onEvent(DeletedNotesEvent.DeleteNote(deletedNote))
-                        },
-                        onRecover = {
-                            viewModel.onEvent(DeletedNotesEvent.RecoverNote(deletedNote))
-                        }
-                    )
-                }
+            items(state.deletedNotes) { deletedNote ->
+                DeletedNoteView(
+                    title = deletedNote.title,
+                    content = deletedNote.content,
+                    timestamp = deletedNote.timestamp,
+                    onClick = {
+                        Toast.makeText(
+                            navController.context.applicationContext,
+                            toastText,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    },
+                    onDelete = {
+                        viewModel.onEvent(DeletedNotesEvent.DeleteNote(deletedNote))
+                    },
+                    onRecover = {
+                        viewModel.onEvent(DeletedNotesEvent.RecoverNote(deletedNote))
+                    }
+                )
             }
         }
     }

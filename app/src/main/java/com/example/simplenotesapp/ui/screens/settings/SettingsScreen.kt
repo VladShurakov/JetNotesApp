@@ -5,14 +5,12 @@ import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -26,7 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.simplenotesapp.R
-import com.example.simplenotesapp.ui.screens.notes.NotesViewModel
+import com.example.simplenotesapp.domain.models.SettingsBundle
+import com.example.simplenotesapp.ui.screens.MainViewModel
 import com.example.simplenotesapp.ui.screens.settings.components.SettingsCornerStyleDialog
 import com.example.simplenotesapp.ui.screens.settings.components.SettingsSortDialog
 import com.example.simplenotesapp.ui.screens.settings.components.SettingsStyleDialog
@@ -37,12 +36,11 @@ import com.example.simplenotesapp.ui.theme.MainTheme
 import com.example.simplenotesapp.ui.theme.MainTheme.colors
 import com.example.simplenotesapp.ui.util.Screen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     navController: NavController,
-    viewModel: NotesViewModel = hiltViewModel(),
     settingsBundle: SettingsBundle,
+    viewModel: MainViewModel = hiltViewModel(),
     onSettingsChanged: (SettingsBundle) -> Unit
 ) {
 
@@ -117,7 +115,7 @@ fun SettingsScreen(
             item {
 
                 Text(
-                    text = stringResource(id = R.string.appearance),
+                    text = stringResource(id = R.string.label_appearance),
                     style = MainTheme.typography.title,
                     color = colors.tintColor,
                     modifier = Modifier.padding(start = 18.dp)
@@ -127,7 +125,7 @@ fun SettingsScreen(
                     onClick = {
                         isStyleDialogOpen.value = true
                     },
-                    title = stringResource(id = R.string.theme_color),
+                    title = stringResource(id = R.string.label_theme_color),
                     selectionText = settingsBundle.style.name
                 )
 
@@ -135,7 +133,7 @@ fun SettingsScreen(
                     onClick = {
                         isTextSizeDialogOpen.value = true
                     },
-                    title = stringResource(id = R.string.text_size),
+                    title = stringResource(id = R.string.label_text_size),
                     selectionText = settingsBundle.textSize.name
                 )
 
@@ -143,15 +141,15 @@ fun SettingsScreen(
                     onClick = {
                         isSortDialogOpen.value = true
                     },
-                    title = stringResource(id = R.string.order),
-                    selectionText = stringResource(id = viewModel.state.value.notesOrder.name)
+                    title = stringResource(id = R.string.label_order),
+                    selectionText = stringResource(id = viewModel.state.value.notesOrder.stringName)
                 )
 
                 SettingsView(
                     onClick = {
                         isCornerStyleDialogOpen.value = true
                     },
-                    title = stringResource(id = R.string.card_form),
+                    title = stringResource(id = R.string.label_card_form),
                     selectionText = settingsBundle.cornerStyle.name
                 )
 
@@ -159,8 +157,12 @@ fun SettingsScreen(
                     onClick = {
                         onSettingsChanged(settingsBundle.copy(isDarkMode = !settingsBundle.isDarkMode))
                     },
-                    title = stringResource(id = R.string.app_theme),
-                    selectionText = if (settingsBundle.isDarkMode) "Dark theme" else "Light theme"
+                    title = stringResource(id = R.string.label_app_theme),
+                    selectionText = if (settingsBundle.isDarkMode) {
+                        stringResource(id = R.string.label_dark_theme)
+                    } else {
+                        stringResource(id = R.string.label_light_theme)
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -173,7 +175,7 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = stringResource(id = R.string.another),
+                    text = stringResource(id = R.string.label_another),
                     style = MainTheme.typography.title,
                     color = colors.tintColor,
                     modifier = Modifier.padding(start = 18.dp)
@@ -187,11 +189,9 @@ fun SettingsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    Row(
-
-                    ){
+                    Row {
                         Text(
-                            text = stringResource(id = R.string.deleted_notes),
+                            text = stringResource(id = R.string.label_deleted_notes),
                             style = MainTheme.typography.title,
                             color = colors.primaryTextColor
                         )
@@ -208,7 +208,7 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = stringResource(id = R.string.about_app),
+                    text = stringResource(id = R.string.label_about_app),
                     style = MainTheme.typography.title,
                     color = colors.tintColor,
                     modifier = Modifier.padding(start = 18.dp)
@@ -226,16 +226,13 @@ fun SettingsScreen(
                 ) {
                     Row {
                         Text(
-                            text = stringResource(id = R.string.github_repository),
+                            text = stringResource(id = R.string.label_github_repository),
                             style = MainTheme.typography.title,
                             color = colors.primaryTextColor,
                         )
                     }
                 }
-                
-
             }
-
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.example.simplenotesapp.domain.usecase
 
-data class NoteUseCases(
+data class UseCases(
 
     val insertNote: InsertNote,
 
@@ -10,5 +10,7 @@ data class NoteUseCases(
 
     val getAllNotes: GetAllNotes,
 
-    val getNotesInTrash: GetNotesInTrash,
+    val getSettings: GetSettings,
+
+    val saveSettings: SaveSettings,
 )

@@ -1,31 +1,43 @@
 <resources>
+
     <string name="app_name">SimpleNotesApp</string>
-    <string name="start_typing">Start typing…</string>
-    <string name="title">Title</string>
-    <string name="add_note">Add note</string>
-    <string name="back">Back</string>
-    <string name="settings">Settings</string>
-    <string name="order">Order</string>
-    <string name="no_content">No content</string>
-    <string name="recover">Recover</string>
-    <string name="date_format_pattern">MMMM dd, yyyy HH:mm ZZZZ</string>
-    <string name="delete">Delete</string>
-    <string name="deleted_notes">Deleted Notes</string>
-    <string name="timestamp">Timestamp</string>
-    <string name="save_note">Save Note</string>
-    <string name="your_note">Your notes</string>
-    <string name="select_item">Select item</string>
-    <string name="another_notes_order">Another notes order</string>
-    <string name="cancel">Cancel</string>
-    <string name="error">Error</string>
-    <string name="delete_all_notes">Delete all notes?</string>
-    <string name="cant_open_deleted_notes">You can\'t open deleted notes</string>
-    <string name="appearance">Appearance</string>
-    <string name="theme_color">Theme Color</string>
-    <string name="text_size">Text size</string>
-    <string name="card_form">Card form</string>
-    <string name="app_theme">App theme</string>
-    <string name="another">Another</string>
-    <string name="about_app">About app</string>
-    <string name="github_repository">Github repository</string>
+    <string name="date_format_pattern">MMMM dd, yyyy HH:mm</string>
+
+    <string name="hint_title">Title</string>
+    <string name="hint_start_typing">Start typing…</string>
+    <string name="hint_no_content">No content</string>
+
+    <string name="btn_add_note">Add Note</string>
+    <string name="btn_save_note">Save Note</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_recover">Recover</string>
+    <string name="btn_settings">Settings</string>
+    <string name="btn_back">Back</string>
+    <string name="btn_selected_item">Selected Item</string>
+    <string name="btn_another_notes_order">Another Notes Order</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <string name="notes_order_title">Title</string>
+    <string name="notes_order_timestamp">Timestamp</string>
+
+    <string name="msg_delete_all_notes">Delete all notes?</string>
+    <string name="msg_cant_open_deleted_notes">You can\'t open deleted notes</string>
+
+    <string name="label_deleted_notes">Deleted Notes</string>
+    <string name="label_order">Order</string>
+    <string name="label_your_note">Your Notes</string>
+    <string name="label_settings">Settings</string>
+    <string name="label_appearance">Appearance</string>
+    <string name="label_theme_color">Theme Color</string>
+    <string name="label_text_size">Text size</string>
+    <string name="label_card_form">Card Form</string>
+    <string name="label_app_theme">App theme</string>
+    <string name="label_another">Another</string>
+    <string name="label_about_app">About app</string>
+    <string name="label_github_repository">Github repository</string>
+    <string name="label_no_note">There is no note</string>
+    <string name="label_record_note">Press \"+\" to record the note</string>
+    <string name="label_light_theme">Light theme</string>
+    <string name="label_dark_theme">Dark theme</string>
+
 </resources>

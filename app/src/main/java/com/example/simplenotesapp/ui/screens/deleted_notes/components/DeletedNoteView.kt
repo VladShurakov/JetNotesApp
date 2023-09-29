@@ -1,16 +1,14 @@
 package com.example.simplenotesapp.ui.screens.deleted_notes.components
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -32,24 +30,67 @@ fun DeletedNoteView(
     onClick: () -> Unit, onDelete: () -> Unit, onRecover: () -> Unit
 ) {
 
-    Card(
-        elevation = CardDefaults.elevatedCardElevation(4.dp),
-        colors = CardDefaults.cardColors(MainTheme.colors.secondaryBackground),
+    Button(
+        onClick = (onClick),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MainTheme.colors.secondaryBackground
+        ),
+        elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp),
         shape = MainTheme.shapes.cornersStyle,
+        contentPadding = PaddingValues(start = 12.dp, top = 12.dp),
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 6.dp)
     ) {
 
-        Box(
-            modifier = Modifier
-                .clickable(onClick = onClick)
-        ) {
+        Row {
+
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+
+                Text(
+                    text = title,
+                    maxLines = 1,
+                    style = MainTheme.typography.title,
+                    color = MainTheme.colors.primaryTextColor,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Text(
+                    text = if (isContentBlank(content = content))
+                        stringResource(id = R.string.hint_no_content)
+                    else
+                        content,
+                    maxLines = 1,
+                    style = MainTheme.typography.body,
+                    color = MainTheme.colors.secondaryTextColor,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Text(
+                    text = SimpleDateFormat(
+                        stringResource(id = R.string.date_format_pattern),
+                        Locale.getDefault(),
+                    ).format(Date(timestamp)),
+                    style = MainTheme.typography.caption,
+                    color = MainTheme.colors.secondaryTextColor,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 12.dp)
+                )
+
+            }
 
             Row(
-                horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.Bottom,
-                modifier = Modifier.matchParentSize()
+                modifier = Modifier.align(Alignment.Bottom)
             ) {
 
                 IconButton(
@@ -57,7 +98,7 @@ fun DeletedNoteView(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.recover),
-                        contentDescription = stringResource(id = R.string.recover),
+                        contentDescription = stringResource(id = R.string.btn_recover),
                         tint = MainTheme.colors.invertColor
                     )
                 }
@@ -67,63 +108,17 @@ fun DeletedNoteView(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.delete),
-                        contentDescription = stringResource(id = R.string.delete),
+                        contentDescription = stringResource(id = R.string.btn_delete),
                         tint = MainTheme.colors.invertColor
                     )
                 }
 
             }
-
-            Column {
-
-                Text(
-                    text = title,
-                    maxLines = 1,
-                    style = MainTheme.typography.title,
-                    color = MainTheme.colors.primaryTextColor,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 12.dp, start = 12.dp, end = 12.dp)
-                )
-
-                Spacer(modifier = Modifier.height(6.dp))
-
-                Text(
-                    text = if (isContentBlank(content = content))
-                        stringResource(id = R.string.no_content)
-                    else
-                        content,
-                    maxLines = 1,
-                    style = MainTheme.typography.body,
-                    color = MainTheme.colors.secondaryTextColor,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 12.dp, end = 12.dp)
-                )
-
-                Spacer(modifier = Modifier.height(6.dp))
-
-                Text(
-                    text = SimpleDateFormat(
-                        "dd MMMM, yyyy HH:mm ZZZZ",
-                        Locale.getDefault(),
-                    ).format(Date(timestamp)),
-                    style = MainTheme.typography.caption,
-                    color = MainTheme.colors.secondaryTextColor,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 12.dp, start = 12.dp, end = 12.dp)
-                )
-
-            }
-
         }
-
     }
-
 }
 
-private fun isContentBlank(content: String): Boolean{
+private fun isContentBlank(content: String): Boolean {
     return content.isBlank() || content.isEmpty() ||
             content.startsWith('\n') || content.startsWith(' ')
 }

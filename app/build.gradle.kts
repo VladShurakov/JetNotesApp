@@ -15,7 +15,7 @@ android {
         minSdk = 26
         targetSdk = 34
         versionCode = 1
-        versionName = "0.90.1"
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -50,15 +50,16 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    buildToolsVersion = rootProject.extra["buildToolsVersion"] as String
     kapt{
         correctErrorTypes = true
     }
 }
 
 dependencies {
-    val nav_version = "2.7.2"
     val room_version = "2.5.2"
     val hilt_version = "2.48"
+    val coroutines_version = "1.7.3"
 
     // Dagger - Hilt
     implementation("com.google.dagger:hilt-android:$hilt_version")
@@ -66,31 +67,30 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
     // Navigation
-    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.navigation:navigation-compose:2.7.3")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
 
     // Room
     implementation("androidx.room:room-runtime:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
 
-    implementation(kotlin("reflect"))
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation("androidx.activity:activity-compose:${rootProject.extra["activityComposeVersion"]}")
+    implementation(platform("androidx.compose:compose-bom:2023.09.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material3:material3:1.1.2")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.09.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.2")
 }

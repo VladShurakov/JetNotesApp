@@ -7,7 +7,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.simplenotesapp.ui.screens.settings.SettingsBundle
+import com.example.simplenotesapp.domain.models.SettingsBundle
+import com.example.simplenotesapp.domain.util.SimpleNotesCorners
+import com.example.simplenotesapp.domain.util.SimpleNotesSize
+import com.example.simplenotesapp.domain.util.SimpleNotesStyle
 
 @Composable
 fun SimpleNotesTheme(
@@ -73,8 +76,8 @@ fun SimpleNotesTheme(
 
     val shapes = SimpleNotesShape(
         cornersStyle = when (settingsBundle.cornerStyle){
-            SimpleNotesCorners.Rectangular -> RoundedCornerShape(0.dp)
-            SimpleNotesCorners.Rounded -> RoundedCornerShape(6.dp)
+            SimpleNotesCorners.Rounded -> RoundedCornerShape(8.dp)
+            SimpleNotesCorners.Flat -> RoundedCornerShape(0.dp)
         }
     )
 

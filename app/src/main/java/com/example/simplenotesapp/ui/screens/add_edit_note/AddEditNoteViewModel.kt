@@ -7,14 +7,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simplenotesapp.domain.models.Note
-import com.example.simplenotesapp.domain.usecase.NoteUseCases
+import com.example.simplenotesapp.domain.usecase.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
-    private val notesUseCases: NoteUseCases,
+    private val useCases: UseCases,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -36,7 +36,7 @@ class AddEditNoteViewModel @Inject constructor(
         savedStateHandle.get<Long>("id")?.let { noteId ->
             if (noteId != (-1).toLong()) {
                 viewModelScope.launch {
-                    notesUseCases.getNoteById(noteId)?.also { note ->
+                    useCases.getNoteById(noteId)?.also { note ->
 
                         currentNoteId = note.id
 
@@ -90,17 +90,18 @@ class AddEditNoteViewModel @Inject constructor(
 
             is AddEditNoteEvent.InsertNote -> {
                 viewModelScope.launch {
-                    currentNoteId = notesUseCases.insertNote(
+                    currentNoteId = useCases.insertNote(
                         Note(
                             title = noteTitle.value.text,
                             content = noteContent.value.text,
                             timestamp = System.currentTimeMillis(),
-                            inTrash = false,
+                            deleted = false,
                             id = currentNoteId
                         )
                     )
                 }
             }
+
         }
     }
 }

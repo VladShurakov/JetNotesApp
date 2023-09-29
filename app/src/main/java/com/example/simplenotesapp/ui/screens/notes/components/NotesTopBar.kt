@@ -23,7 +23,7 @@ fun NotesTopBar(
     TopAppBar(
         title = {
             Text(
-                text = stringResource(id = R.string.your_note),
+                text = stringResource(id = R.string.label_your_note),
                 style = MainTheme.typography.header
             )
         },
@@ -37,7 +37,7 @@ fun NotesTopBar(
                     else
                         R.drawable.order_by_title
                     ),
-                    contentDescription = stringResource(id = R.string.order)
+                    contentDescription = stringResource(id = R.string.label_order)
                 )
             }
             IconButton(
@@ -45,11 +45,11 @@ fun NotesTopBar(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.settings),
-                    contentDescription = stringResource(id = R.string.settings)
+                    contentDescription = stringResource(id = R.string.btn_settings)
                 )
             }
         },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MainTheme.colors.primaryBackground,
             actionIconContentColor = MainTheme.colors.invertColor,
             titleContentColor = MainTheme.colors.primaryTextColor

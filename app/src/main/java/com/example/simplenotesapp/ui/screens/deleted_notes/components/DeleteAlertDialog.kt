@@ -29,7 +29,7 @@ fun DeleteAlertDialog(
                 }
             ) {
                 Text(
-                    text = stringResource(id = R.string.delete),
+                    text = stringResource(id = R.string.btn_delete),
                     style = MainTheme.typography.body,
                     color = MainTheme.colors.primaryTextColor
                 )
@@ -40,7 +40,7 @@ fun DeleteAlertDialog(
                 onClick = (onCancel)
             ) {
                 Text(
-                    text = stringResource(id = R.string.cancel),
+                    text = stringResource(id = R.string.btn_cancel),
                     style = MainTheme.typography.body,
                     color = MainTheme.colors.primaryTextColor
                 )
@@ -48,7 +48,7 @@ fun DeleteAlertDialog(
         },
         text = {
             Text(
-                text = stringResource(id = R.string.delete_all_notes),
+                text = stringResource(id = R.string.msg_delete_all_notes),
                 style = MainTheme.typography.title,
                 color = MainTheme.colors.primaryTextColor
             )

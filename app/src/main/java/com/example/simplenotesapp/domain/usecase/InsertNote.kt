@@ -11,7 +11,7 @@ class InsertNote(
         if (note.title.isBlank() && note.content.isBlank())
             return null
         if (note.title.isBlank() && (note.content.isNotBlank() || !note.content.startsWith(' ')))
-            note.title = note.content.takeWhile { (it != ' ') || (it != '\n') }.take(12)
+            note.title = note.content.takeWhile { (it != ' ') && (it != '\n') }.take(12)
         return repository.insertNote(note = note)
     }
 }

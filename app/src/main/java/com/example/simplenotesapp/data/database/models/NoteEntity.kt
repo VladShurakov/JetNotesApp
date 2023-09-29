@@ -16,9 +16,9 @@ data class NoteEntity(
     @ColumnInfo(name = "timestamp")
     val timestamp: Long,
 
-    @ColumnInfo(name = "inTrash")
-    val inTrash: Boolean = false,
+    @ColumnInfo(name = "deleted")
+    val deleted: Boolean = false,
 
     @PrimaryKey(autoGenerate = true)
     val id: Long? = null,
-    )
+)

@@ -8,7 +8,7 @@ data class Note(
 
     val timestamp: Long,
 
-    val inTrash: Boolean = false,
+    val deleted: Boolean = false,
 
     val id: Long? = null,
-    )
+)
