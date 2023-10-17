@@ -1,4 +1,6 @@
-# Jet Notes App
+<h1 align="center">
+  :memo: Jet Notes App :memo:
+</h1>
 
 This is repository for learning Jetpack Compose
 
