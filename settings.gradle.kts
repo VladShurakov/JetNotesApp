@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 pluginManagement {
     repositories {
         google()
@@ -13,5 +15,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Notes"
+rootProject.name = "JetNotesApp"
 include(":app")
