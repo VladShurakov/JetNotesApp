@@ -4,13 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -47,13 +47,13 @@ fun SettingsScreen(
     onSettingsChanged: (SettingsBundle) -> Unit
 ) {
 
-    val isSortDialogOpen = remember {
-        mutableStateOf(false)
-    }
     val isStyleDialogOpen = remember {
         mutableStateOf(false)
     }
     val isTextSizeDialogOpen = remember {
+        mutableStateOf(false)
+    }
+    val isSortDialogOpen = remember {
         mutableStateOf(false)
     }
     val isCornerStyleDialogOpen = remember {
@@ -61,15 +61,6 @@ fun SettingsScreen(
     }
     val isThemeDialogOpen = remember {
         mutableStateOf(false)
-    }
-
-    if (isSortDialogOpen.value) {
-        SettingsSortDialog(
-            onCancel = {
-                isSortDialogOpen.value = false
-            },
-            viewModel = viewModel
-        )
     }
 
     if (isStyleDialogOpen.value) {
@@ -89,6 +80,15 @@ fun SettingsScreen(
             },
             settingsBundle = settingsBundle,
             onSettingsChanged = onSettingsChanged
+        )
+    }
+
+    if (isSortDialogOpen.value) {
+        SettingsSortDialog(
+            onCancel = {
+                isSortDialogOpen.value = false
+            },
+            viewModel = viewModel
         )
     }
 
@@ -121,150 +121,147 @@ fun SettingsScreen(
             )
         }
     ) { topBarPadding ->
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(colors.primaryBackground)
                 .padding(topBarPadding)
         ) {
 
-            item {
+            SettingsView(
+                onClick = {
+                    isStyleDialogOpen.value = true
+                },
+                title = stringResource(id = R.string.label_theme_color),
+                selectionText = settingsBundle.style.name,
+                selectionTextColor = colors.tintColor
+            )
 
-                SettingsView(
-                    onClick = {
-                        isStyleDialogOpen.value = true
-                    },
-                    title = stringResource(id = R.string.label_theme_color),
-                    selectionText = settingsBundle.style.name,
-                    selectionTextColor = colors.tintColor
-                )
+            SettingsView(
+                onClick = {
+                    isTextSizeDialogOpen.value = true
+                },
+                title = stringResource(id = R.string.label_text_size),
+                selectionText = settingsBundle.textSize.name
+            )
 
-                SettingsView(
-                    onClick = {
-                        isTextSizeDialogOpen.value = true
-                    },
-                    title = stringResource(id = R.string.label_text_size),
-                    selectionText = settingsBundle.textSize.name
-                )
+            SettingsView(
+                onClick = {
+                    isSortDialogOpen.value = true
+                },
+                title = stringResource(id = R.string.label_order),
+                selectionText = stringResource(id = viewModel.notesState.value.notesOrder.stringName)
+            )
 
-                SettingsView(
-                    onClick = {
-                        isSortDialogOpen.value = true
-                    },
-                    title = stringResource(id = R.string.label_order),
-                    selectionText = stringResource(id = viewModel.notesState.value.notesOrder.stringName)
-                )
+            SettingsView(
+                onClick = {
+                    isCornerStyleDialogOpen.value = true
+                },
+                title = stringResource(id = R.string.label_card_form),
+                selectionText = settingsBundle.cornerStyle.name
+            )
 
-                SettingsView(
-                    onClick = {
-                        isCornerStyleDialogOpen.value = true
-                    },
-                    title = stringResource(id = R.string.label_card_form),
-                    selectionText = settingsBundle.cornerStyle.name
-                )
+            SettingsView(
+                onClick = {
+                    isThemeDialogOpen.value = true
+                },
+                title = stringResource(id = R.string.label_app_theme),
+                selectionText = settingsBundle.theme.name
+            )
 
-                SettingsView(
-                    onClick = {
-                        isThemeDialogOpen.value = true
-                    },
-                    title = stringResource(id = R.string.label_app_theme),
-                    selectionText = settingsBundle.theme.name
-                )
-
-                TextButton(
-                    onClick = {
-                        navController.navigate(Screen.DeletedNotes.route)
-                    },
-                    shape = RectangleShape,
-                    contentPadding = PaddingValues(start = 18.dp),
+            TextButton(
+                onClick = {
+                    navController.navigate(Screen.DeletedNotes.route)
+                },
+                shape = RectangleShape,
+                contentPadding = PaddingValues(start = 18.dp),
+                modifier = Modifier
+                    .defaultMinSize(minHeight = 48.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.Start,
                     modifier = Modifier
-                        .defaultMinSize(minHeight = 48.dp)
+                        .fillMaxWidth()
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.label_deleted_notes),
-                            style = MainTheme.typography.body,
-                            color = colors.tintColor
-                        )
-                    }
+                    Text(
+                        text = stringResource(id = R.string.label_deleted_notes),
+                        style = MainTheme.typography.body,
+                        color = colors.tintColor
+                    )
                 }
-
-                Divider(
-                    thickness = 1.dp,
-                    color = colors.secondaryTextColor
-                )
-
-                Text(
-                    text = stringResource(id = R.string.label_about),
-                    style = MainTheme.typography.title,
-                    color = colors.secondaryTextColor,
-                    modifier = Modifier
-                        .padding(start = 18.dp, top = 18.dp)
-                )
-                
-                TextButton(
-                    onClick = {
-                        val url = "https://github.com/VladShurakov/SimpleNotesApp"
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                        navController.context.startActivity(intent)
-                    },
-                    shape = RectangleShape,
-                    contentPadding = PaddingValues(start = 18.dp),
-                    modifier = Modifier
-                        .defaultMinSize(minHeight = 48.dp)
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.label_github_repository),
-                            style = MainTheme.typography.body,
-                            color = colors.tintColor
-                        )
-                    }
-                }
-
-                TextButton(
-                    onClick = {
-                        val url = "https://sites.google.com/view/jetnotesapp"
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                        navController.context.startActivity(intent)
-                    },
-                    shape = RectangleShape,
-                    contentPadding = PaddingValues(start = 18.dp),
-                    modifier = Modifier
-                        .defaultMinSize(minHeight = 48.dp)
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.privacy_policy),
-                            style = MainTheme.typography.body,
-                            color = colors.tintColor
-                        )
-                    }
-                }
-
-                Text(
-                    text = "Version " + stringResource(id = R.string.app_version),
-                    style = MainTheme.typography.body,
-                    color = colors.primaryTextColor,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .defaultMinSize(minHeight = 48.dp)
-                        .padding(start = 18.dp)
-                )
-
             }
+
+            Divider(
+                thickness = 1.dp,
+                color = colors.secondaryTextColor
+            )
+
+            Text(
+                text = stringResource(id = R.string.label_about),
+                style = MainTheme.typography.title,
+                color = colors.secondaryTextColor,
+                modifier = Modifier
+                    .padding(start = 18.dp, top = 18.dp)
+            )
+
+            TextButton(
+                onClick = {
+                    val url = "https://github.com/VladShurakov/SimpleNotesApp"
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    navController.context.startActivity(intent)
+                },
+                shape = RectangleShape,
+                contentPadding = PaddingValues(start = 18.dp),
+                modifier = Modifier
+                    .defaultMinSize(minHeight = 48.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.label_github_repository),
+                        style = MainTheme.typography.body,
+                        color = colors.tintColor
+                    )
+                }
+            }
+
+            TextButton(
+                onClick = {
+                    val url = "https://sites.google.com/view/jetnotesapp"
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    navController.context.startActivity(intent)
+                },
+                shape = RectangleShape,
+                contentPadding = PaddingValues(start = 18.dp),
+                modifier = Modifier
+                    .defaultMinSize(minHeight = 48.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.privacy_policy),
+                        style = MainTheme.typography.body,
+                        color = colors.tintColor
+                    )
+                }
+            }
+
+            Text(
+                text = "Version " + stringResource(id = R.string.app_version),
+                style = MainTheme.typography.body,
+                color = colors.primaryTextColor,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .defaultMinSize(minHeight = 48.dp)
+                    .padding(start = 18.dp)
+            )
+
         }
     }
 }

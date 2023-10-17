@@ -48,8 +48,6 @@ class MainViewModel @Inject constructor(
         when (event) {
 
             is MainEvent.ChangeNotesOrder -> {
-                if (useCases.getSettings.invoke().notesOrder == event.notesOrder)
-                    return
                 _notesState.value.notesOrder = event.notesOrder
                 saveSettings(
                     settingsBundle = useCases.getSettings.invoke()
