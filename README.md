@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/VladShurakov/JetNotesApp/assets/117427146/af2153c9-9bd3-45e7-8a0a-644bab80dc12" width="600">
+</p>
+
 <h1 align="center">
   :memo: Jet Notes App :memo:
 </h1>
@@ -8,17 +12,9 @@
   <img alt="GitHub" src="https://img.shields.io/github/license/VladShurakov/JetNotesApp?labelColor=black&color=%237F52FF">
 </p>
 
-Notes app project on Android written in Kotlin with Jetpack Compose
+Notes app project on Android written in Kotlin with Jetpack Compose.
 
 Feel free to make issues, forks and pull requests
-
-## :clipboard: Tech Stack
-- Minimum SDK level 26
-- Clean Architecture
-- MVVM pattern
-- DI: Hilt
-- Async: Coroutines
-- DataBase: Room
 
 ## :iphone: Screenshots & Gif
 
@@ -30,6 +26,22 @@ Feel free to make issues, forks and pull requests
   <img src="https://github.com/VladShurakov/JetNotesApp/assets/117427146/19e2d47b-381f-47bc-9b75-045c777238bd" width="240">
   <img src="https://github.com/VladShurakov/JetNotesApp/assets/117427146/1ae11c02-4948-42d6-901e-e8ae4a5714fd" width="240">
 </p>
+
+## :arrow_down: Download & :computer: Requirements
+
+Minimum SDK/API level for this project is 26(Android 8.0). 
+
+Two way to download:
+1. Go to the [Releases](https://github.com/VladShurakov/JetNotesApp/releases) to download the latest APK or ABB.
+   <br/>OR
+2. Clone this repository or import the project from Android Studio.
+   
+## :clipboard: Tech Stack
+- Clean Architecture
+- MVVM pattern
+- DI: Hilt
+- Async: Coroutines
+- DataBase: Room
 
 ## :warning: Find a bug?
 
