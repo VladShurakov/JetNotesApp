@@ -2,16 +2,29 @@
   :memo: Jet Notes App :memo:
 </h1>
 
-Notes app on Android with Jetpack Compose
+<p align="center">
+  <img alt="API" src="https://img.shields.io/badge/kotlin-black?logo=kotlin&logoColor=%237F52FF"/>
+  <img alt="Static Badge" src="https://img.shields.io/badge/Jetpack%20Compose-black?logo=jetpackcompose&logoColor=%237F52FF">
+  <img alt="Static Badge" src="https://img.shields.io/badge/26%2B-%237F52FF?label=API&labelColor=black">
+  <img alt="Static Badge" src="https://img.shields.io/badge/VladShurakov-%237F52FF?logo=github&logoColor=white&label=GitHub&labelColor=black">
+</p>
+
+Notes app project on Android written in Kotlin with Jetpack Compose
 
 Feel free to make issues, forks and pull requests
 
-# Tech Stack
+## :clipboard: Tech Stack
+- Minimum SDK level 26
 - Clean Architecture
 - MVVM pattern
 - DI: Hilt
-- Coroutines
-- Room
+- Async: Coroutines
+- DataBase: Room
 
-# Screenshots
-![screenshots](https://github.com/VladShurakov/JetNotesApp/assets/117427146/ea2774e6-b526-4301-9472-b9f43002e20c)
+## :iphone: Screenshots
+
+![screenshots](https://github.com/VladShurakov/JetNotesApp/assets/117427146/40455469-5fd8-4249-99cc-4209a9c3e73b)
+
+## :warning: Find a bug?
+
+If you found an issue or would like to submit an improvement to this project, please submit an issue using the issues tab above.
