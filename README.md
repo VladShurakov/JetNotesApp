@@ -1,11 +1,12 @@
 <h1 align="center">
-  :memo: Jet Notes App :memo:
+  Jet Notes App
 </h1>
 
 <p align="center">
-  <img alt="GitHub" src="https://img.shields.io/github/license/VladShurakov/JetNotesApp?labelColor=black&color=%237F52FF">
-  <img alt="Static Badge" src="https://img.shields.io/badge/Jetpack%20Compose-black?logo=jetpackcompose&logoColor=%237F52FF">
-  <img alt="Static Badge" src="https://img.shields.io/badge/26%2B-%237F52FF?label=API&labelColor=black">
+  <a href="https://www.apache.org/licenses/LICENSE-2.0"><img alt="GitHub" src="https://img.shields.io/github/license/VladShurakov/JetNotesApp?labelColor=111111&color=5C5C5C"></a>
+  <img alt="Static Badge" src="https://img.shields.io/badge/Jetpack%20Compose-5C5C5C?logo=jetpackcompose&logoColor=%237F52FF">
+  <a href="https://android-arsenal.com/api?level=26"><img alt="Static Badge" src="https://img.shields.io/badge/26%2B-5C5C5C?label=API&labelColor=111111"></a>
+  <a href="https://github.com/VladShurakov"><img alt="Static Badge" src="https://img.shields.io/badge/GitHub-5C5C5C?label=VladShurakov&labelColor=111111"></a> 
 </p>
 
 Notes app project on Android written in Kotlin with Jetpack Compose.
