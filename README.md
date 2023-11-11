@@ -9,7 +9,7 @@
   <a href="https://github.com/VladShurakov"><img alt="Static Badge" src="https://img.shields.io/badge/GitHub-B53636?label=VladShurakov&labelColor=5C5C5C"></a> 
 </p>
 
-Notes App on Kotlin MVVM Clean Architecture for Android.
+Notes App on Kotlin MVVM Clean Architecture on Android.
 
 Feel free to make issues, forks and pull requests
 
