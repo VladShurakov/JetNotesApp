@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.jetnotesapp.data.database.NoteDatabase
 import com.example.jetnotesapp.data.repository.NoteRepositoryImpl
-import com.example.jetnotesapp.data.repository.SettingsRepositoryImlp
+import com.example.jetnotesapp.data.repository.SettingsRepositoryImpl
 import com.example.jetnotesapp.domain.repository.NoteRepository
 import com.example.jetnotesapp.domain.repository.SettingsRepository
 import com.example.jetnotesapp.domain.usecase.DeleteNote
@@ -44,7 +44,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideSettingsRepository(@ApplicationContext context: Context): SettingsRepository {
-        return SettingsRepositoryImlp(context = context)
+        return SettingsRepositoryImpl(context = context)
     }
 
     @Provides

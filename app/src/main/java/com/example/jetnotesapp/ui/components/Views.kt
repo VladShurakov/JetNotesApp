@@ -39,7 +39,6 @@ fun NoteView(
         colors = ButtonDefaults.buttonColors(
             containerColor = MainTheme.colors.secondaryBackground
         ),
-        elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp),
         shape = MainTheme.shapes.cornersStyle,
         contentPadding = PaddingValues(start = 12.dp, top = 12.dp),
         modifier = Modifier

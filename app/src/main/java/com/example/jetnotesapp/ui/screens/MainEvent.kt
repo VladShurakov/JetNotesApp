@@ -10,7 +10,7 @@ sealed interface MainEvent {
 
     data class ChangeNotesOrder(val notesOrder: NotesOrder): MainEvent
 
-    object ChangeOrderType: MainEvent
+    data object ChangeOrderType: MainEvent
 
     data class Delete(val note: Note): MainEvent
 

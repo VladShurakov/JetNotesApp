@@ -7,5 +7,4 @@ interface SettingsRepository {
     fun getSettings(): SettingsBundle
 
     fun saveSettings(settingsBundle: SettingsBundle)
-
 }

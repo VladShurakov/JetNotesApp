@@ -21,7 +21,7 @@ private const val STYLE_KEY = "style"
 private const val NOTES_ORDER_KEY = "notes_order"
 private const val ORDER_TYPE_KEY = "order_type"
 
-class SettingsRepositoryImlp(context: Context): SettingsRepository {
+class SettingsRepositoryImpl(context: Context): SettingsRepository {
 
     private val sharedPreferences = context.getSharedPreferences(
         SHARED_PREFS_NAME,

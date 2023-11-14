@@ -87,6 +87,7 @@ fun NotesScreen(
                 .imePadding()
         ) {
             item {
+                // Search TextField
                 TextField(
                     value = viewModel.notesState.value.query,
                     onValueChange = {
