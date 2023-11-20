@@ -3,10 +3,10 @@
 </h1>
 
 <p align="center">
-  <a href="https://www.apache.org/licenses/LICENSE-2.0"><img alt="GitHub" src="https://img.shields.io/github/license/VladShurakov/JetNotesApp?labelColor=5C5C5C1&color=B53636"></a>
-  <img alt="Static Badge" src="https://img.shields.io/badge/Jetpack%20Compose-B53636?logo=jetpackcompose&logoColor=5C5C5C">
-  <a href="https://android-arsenal.com/api?level=26"><img alt="Static Badge" src="https://img.shields.io/badge/26%2B-B53636?label=API&labelColor=5C5C5C"></a>
-  <a href="https://github.com/VladShurakov"><img alt="Static Badge" src="https://img.shields.io/badge/GitHub-B53636?label=VladShurakov&labelColor=5C5C5C"></a> 
+  <a href="https://www.apache.org/licenses/LICENSE-2.0"><img alt="GitHub" src="https://img.shields.io/github/license/VladShurakov/JetNotesApp?labelColor=5C5C5C1&color=eb5454"></a>
+  <img alt="Static Badge" src="https://img.shields.io/badge/Jetpack%20Compose-eb5454?logo=jetpackcompose&logoColor=5C5C5C">
+  <a href="https://android-arsenal.com/api?level=26"><img alt="Static Badge" src="https://img.shields.io/badge/26%2B-eb5454?label=API&labelColor=5C5C5C"></a>
+  <a href="https://github.com/VladShurakov"><img alt="Static Badge" src="https://img.shields.io/badge/GitHub-eb5454?label=VladShurakov&labelColor=5C5C5C"></a> 
 </p>
 
 Notes App on Kotlin MVVM Clean Architecture on Android.
@@ -32,6 +32,15 @@ Go to [Releases](https://github.com/VladShurakov/JetNotesApp/releases) to downlo
 - Dependency Injection: Hilt
 - Async: Coroutines + Flow
 - DataBase: Room
+
+## Contribute
+**Want to contribute?** See **[CONTRIBUTING.md](/CONTRIBUTING.md)**
+
+## Contributors Wall
+
+<a href="https://github.com/VladShurakov/JetNotesApp/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=VladShurakov/JetNotesApp" />
+</a>
 
 ## :page_facing_up: License
 
