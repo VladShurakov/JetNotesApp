@@ -23,7 +23,7 @@ Go to [Releases](https://github.com/VladShurakov/JetNotesApp/releases) to downlo
 
 | Add note | Edit note | Search note |
 |----------|-----------|-------------|
-| <img src="https://github.com/VladShurakov/JetNotesApp/assets/117427146/704b0784-5b22-444a-b893-c6ba3733633c" width="260"> | <img src="https://github.com/VladShurakov/JetNotesApp/assets/117427146/503e2f13-c2b5-402c-b622-4ca369843f14" width="260"> | <img src="https://github.com/VladShurakov/JetNotesApp/assets/117427146/19e2d47b-381f-47bc-9b75-045c777238bd" width="260"> |
+| <img src="https://github.com/VladShurakov/JetNotesApp/assets/117427146/704b0784-5b22-444a-b893-c6ba3733633c" width="240"> | <img src="https://github.com/VladShurakov/JetNotesApp/assets/117427146/503e2f13-c2b5-402c-b622-4ca369843f14" width="240"> | <img src="https://github.com/VladShurakov/JetNotesApp/assets/117427146/19e2d47b-381f-47bc-9b75-045c777238bd" width="240"> |
    
 ## :clipboard: Tech Stack
 - Minimum SDK level 26(Android 8.0)
