@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  <a href="https://www.apache.org/licenses/LICENSE-2.0"><img alt="GitHub" src="https://img.shields.io/github/license/VladShurakov/JetNotesApp?labelColor=5C5C5C1&color=eb5454"></a>
+  <img alt="GitHub" src="https://img.shields.io/github/license/VladShurakov/JetNotesApp?labelColor=5C5C5C1&color=eb5454">
   <img alt="Static Badge" src="https://img.shields.io/badge/Jetpack%20Compose-eb5454?logo=jetpackcompose&logoColor=5C5C5C">
   <a href="https://android-arsenal.com/api?level=26"><img alt="Static Badge" src="https://img.shields.io/badge/26%2B-eb5454?label=API&labelColor=5C5C5C"></a>
   <a href="https://github.com/VladShurakov"><img alt="Static Badge" src="https://img.shields.io/badge/GitHub-eb5454?label=VladShurakov&labelColor=5C5C5C"></a> 
