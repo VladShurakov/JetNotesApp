@@ -19,12 +19,12 @@ Go to [Releases](https://github.com/VladShurakov/JetNotesApp/releases) to downlo
 
 ## :iphone: Screenshots & Gif
 
-![screenshots](https://github.com/VladShurakov/JetNotesApp/assets/117427146/40455469-5fd8-4249-99cc-4209a9c3e73b)
+![screenshots](https://github.com/VladShurakov/JetNotesApp/assets/117427146/0b16f811-2a33-431c-9702-eafedfb3a79e)
 
 | Add note | Edit note | Search note |
 |----------|-----------|-------------|
-| <img src="https://github.com/VladShurakov/JetNotesApp/assets/117427146/704b0784-5b22-444a-b893-c6ba3733633c" width="240"> | <img src="https://github.com/VladShurakov/JetNotesApp/assets/117427146/503e2f13-c2b5-402c-b622-4ca369843f14" width="240"> | <img src="https://github.com/VladShurakov/JetNotesApp/assets/117427146/19e2d47b-381f-47bc-9b75-045c777238bd" width="240"> |
-   
+| ![Gif1](https://github.com/VladShurakov/JetNotesApp/assets/117427146/a02db387-48c8-4694-b839-318cdc8c6e43) | ![Gif2](https://github.com/VladShurakov/JetNotesApp/assets/117427146/fe1ededb-e025-4144-9843-2dc628cf2cfa) | ![Gif3](https://github.com/VladShurakov/JetNotesApp/assets/117427146/d8d69f32-231a-4998-8d78-19ff11bd069e) |
+
 ## :clipboard: Tech Stack
 - Minimum SDK level 26(Android 8.0)
 - Programming language: Kotlin
@@ -34,7 +34,7 @@ Go to [Releases](https://github.com/VladShurakov/JetNotesApp/releases) to downlo
 - DataBase: Room
 
 ## Contribute
-See **[CONTRIBUTING.md](/CONTRIBUTING.md)** before contributing
+**Want to contribute?** See **[CONTRIBUTING.md](/CONTRIBUTING.md)**
 
 ## :page_facing_up: License
 
