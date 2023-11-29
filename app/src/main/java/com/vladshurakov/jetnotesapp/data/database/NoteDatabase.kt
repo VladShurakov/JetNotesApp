@@ -1,0 +1,15 @@
+package com.vladshurakov.jetnotesapp.data.database
+
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import com.vladshurakov.jetnotesapp.data.database.models.NoteEntity
+
+@Database(
+    entities = [NoteEntity::class],
+    version = 1,
+    exportSchema = false
+)
+abstract class NoteDatabase : RoomDatabase() {
+
+    abstract val noteDao: NoteDao
+}

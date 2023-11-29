@@ -1,6 +1,5 @@
 <resources>
-
-    <string name="app_name">Jet Notes App</string>
+    <string name="app_name">JetNotes</string>
     <string name="date_format_pattern">MMMM dd, yyyy HH:mm</string>
 
     <string name="hint_title">Title</string>
@@ -38,9 +37,8 @@
     <string name="label_light_theme">Light theme</string>
     <string name="label_dark_theme">Dark theme</string>
     <string name="label_about">About</string>
-    <string name="app_version">1.1.1</string>
+    <string name="app_version">1.0.0</string>
     <string name="label_no_deleted_note">There are no deleted notes</string>
     <string name="search">Search</string>
     <string name="privacy_policy">Privacy Policy</string>
-
 </resources>

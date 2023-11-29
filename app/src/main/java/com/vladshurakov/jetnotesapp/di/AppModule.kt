@@ -1,0 +1,63 @@
+package com.vladshurakov.jetnotesapp.di
+
+import android.content.Context
+import androidx.room.Room
+import com.vladshurakov.jetnotesapp.data.database.NoteDatabase
+import com.vladshurakov.jetnotesapp.data.repository.NoteRepositoryImpl
+import com.vladshurakov.jetnotesapp.data.repository.SettingsRepositoryImpl
+import com.vladshurakov.jetnotesapp.domain.repository.NoteRepository
+import com.vladshurakov.jetnotesapp.domain.repository.SettingsRepository
+import com.vladshurakov.jetnotesapp.domain.usecase.DeleteNote
+import com.vladshurakov.jetnotesapp.domain.usecase.GetNoteById
+import com.vladshurakov.jetnotesapp.domain.usecase.GetNotes
+import com.vladshurakov.jetnotesapp.domain.usecase.GetSettings
+import com.vladshurakov.jetnotesapp.domain.usecase.InsertNote
+import com.vladshurakov.jetnotesapp.domain.usecase.SaveSettings
+import com.vladshurakov.jetnotesapp.domain.usecase.UseCases
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideNoteDatabase(@ApplicationContext context: Context): NoteDatabase{
+        return Room.databaseBuilder(
+            context = context,
+            klass = NoteDatabase::class.java,
+            name = "notes-database"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNoteRepository(database: NoteDatabase): NoteRepository {
+        return NoteRepositoryImpl(noteDao = database.noteDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSettingsRepository(@ApplicationContext context: Context): SettingsRepository {
+        return SettingsRepositoryImpl(context = context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUseCases(noteRepository: NoteRepository, settingsRepository: SettingsRepository): UseCases{
+        return UseCases(
+            insertNote = InsertNote(repository = noteRepository),
+            getNoteById = GetNoteById(repository = noteRepository),
+            deleteNote = DeleteNote(repository = noteRepository),
+            getNotes = GetNotes(repository = noteRepository),
+            getSettings = GetSettings(repository = settingsRepository),
+            saveSettings = SaveSettings(repository = settingsRepository),
+            )
+    }
+
+}

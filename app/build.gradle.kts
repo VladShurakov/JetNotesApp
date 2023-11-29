@@ -6,25 +6,24 @@ plugins {
 }
 
 android {
-    namespace = "com.example.jetnotesapp"
+    namespace = "com.vladshurakov.jetnotesapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.jetnotesapp"
+        applicationId = "com.vladshurakov.jetnotesapp"
         minSdk = 26
         targetSdk = 34
         versionCode = 2
-        versionName = "1.1.1"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        vectorDrawables { useSupportLibrary = true }
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -35,20 +34,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+    kotlinOptions { jvmTarget = "17" }
+    buildFeatures { compose = true }
+    composeOptions { kotlinCompilerExtensionVersion = "1.5.3" }
+    packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
     buildToolsVersion = "34.0.0"
 }
 
