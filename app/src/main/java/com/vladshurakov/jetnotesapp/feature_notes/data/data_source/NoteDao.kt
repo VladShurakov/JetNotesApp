@@ -1,0 +1,40 @@
+package com.vladshurakov.jetnotesapp.feature_notes.data.data_source
+
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Folder
+import com.vladshurakov.jetnotesapp.feature_notes.domain.models.NoteEntity
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface NoteDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(noteEntity: NoteEntity): Long
+
+    @Query("SELECT * FROM note WHERE id = :id")
+    suspend fun get(id: Long): NoteEntity?
+
+    @Delete
+    suspend fun delete(noteEntity: NoteEntity)
+
+    @Query("UPDATE Note SET folder = :folder WHERE id = :id")
+    suspend fun moveTo(id: Long, folder: Folder)
+
+    @Query("UPDATE Note SET pinned = :pinned WHERE id = :id")
+    suspend fun updatePinned(id: Long, pinned: Boolean)
+
+    @Query("SELECT * FROM note ORDER BY pinned DESC, timestamp DESC")
+    fun getDesc(): Flow<List<NoteEntity>>
+
+    @Query("SELECT * FROM note ORDER BY pinned ASC, timestamp ASC")
+    fun getAsc(): Flow<List<NoteEntity>>
+
+    @Query("SELECT * FROM note WHERE (title LIKE '%' || :query || '%' OR content LIKE '%' || :query || '%') ORDER BY pinned DESC, timestamp DESC")
+    fun getDesc(query: String): Flow<List<NoteEntity>>
+
+    @Query("SELECT * FROM note WHERE (title LIKE '%' || :query || '%' OR content LIKE '%' || :query || '%') ORDER BY pinned ASC, timestamp ASC")
+    fun getAsc(query: String): Flow<List<NoteEntity>>
+}
