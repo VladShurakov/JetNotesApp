@@ -32,6 +32,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideNoteDatabase(@ApplicationContext context: Context): NoteDatabase {
+    fun provideNoteDatabase(@ApplicationContext context: Context): NoteDatabase{
         return Room.databaseBuilder(
             context = context,
             klass = NoteDatabase::class.java,
