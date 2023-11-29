@@ -34,13 +34,7 @@ Go to [Releases](https://github.com/VladShurakov/JetNotesApp/releases) to downlo
 - DataBase: Room
 
 ## Contribute
-**Want to contribute?** See **[CONTRIBUTING.md](/CONTRIBUTING.md)**
-
-## Contributors Wall
-
-<a href="https://github.com/VladShurakov/JetNotesApp/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=VladShurakov/JetNotesApp" />
-</a>
+See **[CONTRIBUTING.md](/CONTRIBUTING.md)** before contributing
 
 ## :page_facing_up: License
 
