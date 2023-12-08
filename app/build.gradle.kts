@@ -13,8 +13,8 @@ android {
         applicationId = "com.vladshurakov.jetnotesapp"
         minSdk = 26
         targetSdk = 34
-        versionCode = 3
-        versionName = "1.1.0"
+        versionCode = 4
+        versionName = "1.1.1"
         resourceConfigurations += listOf("en")
 
         vectorDrawables {
@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    val room_version = "2.6.0"
+    val room_version = "2.6.1"
     val hilt_version = "2.48.1"
     val coroutines_version = "1.7.3"
 
