@@ -51,9 +51,7 @@ class ArchivedViewModel @Inject constructor(
     }
 
     private fun getArchivedNotes() {
-        notesUseCases.getNotes(
-            orderType = OrderType.Descending
-        ).onEach { notes ->
+        notesUseCases.getNotes(OrderType.Descending, Folder.ARCHIVED).onEach { notes ->
             _state.value = notes
         }.launchIn(viewModelScope)
     }

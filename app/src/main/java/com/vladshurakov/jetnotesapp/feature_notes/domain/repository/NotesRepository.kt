@@ -10,8 +10,8 @@ interface NotesRepository {
     suspend fun delete(note: Note)
     suspend fun moveTo(id: Long, folder: Folder)
     suspend fun updatePinned(id: Long, pinned: Boolean)
-    fun getDesc(): Flow<List<Note>>
-    fun getAsc(): Flow<List<Note>>
+    fun getDesc(folder: Folder): Flow<List<Note>>
+    fun getAsc(folder: Folder): Flow<List<Note>>
     fun getDesc(query: String): Flow<List<Note>>
     fun getAsc(query: String): Flow<List<Note>>
 }

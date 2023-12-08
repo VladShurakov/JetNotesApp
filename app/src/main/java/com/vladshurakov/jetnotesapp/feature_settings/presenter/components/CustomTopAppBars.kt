@@ -8,13 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.vladshurakov.jetnotesapp.R
 import com.vladshurakov.jetnotesapp.theme.MainTheme
-import com.vladshurakov.jetnotesapp.util.OrderType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,8 +41,7 @@ fun CustomTopAppBar(
 @Composable
 fun NotesTopBar(
     onSort: () -> Unit,
-    onSettings: () -> Unit,
-    orderType: OrderType
+    onSettings: () -> Unit
 ) {
     CustomTopAppBar(
         title = stringResource(id = R.string.app_name),
@@ -56,11 +52,7 @@ fun NotesTopBar(
                 Icon(
                     painter = painterResource(R.drawable.ic_order),
                     contentDescription = stringResource(id = R.string.label_order),
-                    tint = MainTheme.colors.invertColor,
-                    modifier = Modifier.scale(
-                        scaleY = if (orderType == OrderType.Ascending) -1.0f else 1f,
-                        scaleX = 1f
-                    )
+                    tint = MainTheme.colors.invertColor
                 )
             }
             IconButton(

@@ -26,11 +26,11 @@ interface NoteDao {
     @Query("UPDATE Note SET pinned = :pinned WHERE id = :id")
     suspend fun updatePinned(id: Long, pinned: Boolean)
 
-    @Query("SELECT * FROM note ORDER BY pinned DESC, timestamp DESC")
-    fun getDesc(): Flow<List<NoteEntity>>
+    @Query("SELECT * FROM note WHERE folder = :folder ORDER BY pinned DESC, timestamp DESC")
+    fun getDesc(folder: Folder): Flow<List<NoteEntity>>
 
-    @Query("SELECT * FROM note ORDER BY pinned ASC, timestamp ASC")
-    fun getAsc(): Flow<List<NoteEntity>>
+    @Query("SELECT * FROM note WHERE folder = :folder ORDER BY pinned ASC, timestamp ASC")
+    fun getAsc(folder: Folder): Flow<List<NoteEntity>>
 
     @Query("SELECT * FROM note WHERE (title LIKE '%' || :query || '%' OR content LIKE '%' || :query || '%') ORDER BY pinned DESC, timestamp DESC")
     fun getDesc(query: String): Flow<List<NoteEntity>>

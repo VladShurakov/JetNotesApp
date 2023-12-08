@@ -1,8 +1,5 @@
 package com.vladshurakov.jetnotesapp.feature_notes.presenter.screen
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +11,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material3.DismissValue
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,7 +20,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,19 +35,17 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.vladshurakov.jetnotesapp.R
-import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Folder
-import com.vladshurakov.jetnotesapp.feature_notes.presenter.components.NoteView
+import com.vladshurakov.jetnotesapp.feature_notes.presenter.components.SwipeToDismissNote
 import com.vladshurakov.jetnotesapp.feature_notes.presenter.viewmodel.NotesViewModel
 import com.vladshurakov.jetnotesapp.feature_notes.presenter.viewmodel.events.NotesEvent
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.NotesTopBar
 import com.vladshurakov.jetnotesapp.theme.MainTheme
 import com.vladshurakov.jetnotesapp.util.Screen
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class,)
 @Composable
 fun NotesScreen(
-    navController: NavController,
-    viewModel: NotesViewModel = hiltViewModel()
+    navController: NavController, notesViewModel: NotesViewModel = hiltViewModel()
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
@@ -54,17 +54,14 @@ fun NotesScreen(
         topBar = {
             NotesTopBar(
                 onSort = {
-                    viewModel.onEvent(NotesEvent.ChangeOrderType)
-                },
-                onSettings = {
-                    navController.navigate(Screen.Settings.route)
-                },
-                orderType = viewModel.notesState.value.orderType
-            )
+                    notesViewModel.onEvent(NotesEvent.ChangeOrderType)
+                }
+            ) {
+                navController.navigate(Screen.Settings.route)
+            }
         },
         floatingActionButton = {
-            FloatingActionButton(
-                shape = CircleShape,
+            FloatingActionButton(shape = CircleShape,
                 containerColor = MainTheme.colors.tintColor,
                 onClick = {
                     navController.navigate(Screen.AddEditNote.route)
@@ -75,10 +72,8 @@ fun NotesScreen(
                         contentDescription = stringResource(id = R.string.btn_add_note),
                         tint = MainTheme.colors.primaryBackground
                     )
-                }
-            )
-        }
-    ) { topBarPadding ->
+                })
+        }) { topBarPadding ->
         LazyColumn(
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 82.dp),
             modifier = Modifier
@@ -91,10 +86,8 @@ fun NotesScreen(
             item {
                 // Search TextField
                 TextField(
-                    value = viewModel.notesState.value.query,
-                    onValueChange = {
-                        viewModel.onEvent(NotesEvent.Search(it))
-                    },
+                    value = notesViewModel.notesState.value.query,
+                    onValueChange = { notesViewModel.onEvent(NotesEvent.Search(it)) },
                     textStyle = MainTheme.typography.title,
                     placeholder = {
                         Text(
@@ -111,26 +104,22 @@ fun NotesScreen(
                         )
                     },
                     trailingIcon = {
-                        IconButton(
-                            onClick = {
-                                viewModel.notesState.value.query = ""
-                                viewModel.onEvent(NotesEvent.GetNotes)
-                                keyboardController?.hide()
-                                focusManager.clearFocus()
-                            }
-                        ) {
+                        IconButton(onClick = {
+                            notesViewModel.notesState.value.query = ""
+                            notesViewModel.onEvent(NotesEvent.GetNotes)
+                            keyboardController?.hide()
+                            focusManager.clearFocus()
+                        }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_close),
                                 contentDescription = stringResource(id = R.string.search)
                             )
                         }
                     },
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide()
-                            focusManager.clearFocus()
-                        }
-                    ),
+                    keyboardActions = KeyboardActions(onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }),
                     singleLine = true,
                     shape = MainTheme.shapes.cornersStyle,
                     colors = TextFieldDefaults.colors(
@@ -144,33 +133,34 @@ fun NotesScreen(
                         focusedTextColor = MainTheme.colors.primaryTextColor,
                         unfocusedTextColor = MainTheme.colors.primaryTextColor
                     ),
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
 
-            items(viewModel.notesState.value.notes){ note ->
-                AnimatedVisibility(
-                    visible = note.folder.name == Folder.NOTES.name,
-                    exit = fadeOut() + shrinkVertically()
-                ) {
-                    NoteView(
-                        title = note.title,
-                        content = note.content,
-                        timestamp = note.timestamp,
-                        onClick = {
-                            navController.navigate(
-                                Screen.AddEditNote.route + "?id=${note.id}"
-                            )
-                        },
-                        onDelete = {
-                            viewModel.onEvent(NotesEvent.Delete(note))
-                        },
-                        onArchive = {
-                            viewModel.onEvent(NotesEvent.Archive(note))
+            items(
+                items = notesViewModel.notesState.value.notes,
+                key = { note -> note.id.hashCode() }
+            ) { note ->
+                val currentNote by rememberUpdatedState(note)
+                val dismissState = rememberDismissState(
+                    confirmValueChange = {
+                        if (it == DismissValue.DismissedToStart) {
+                            notesViewModel.onEvent(NotesEvent.Delete(currentNote))
                         }
-                    )
-                }
+                        else if (it == DismissValue.DismissedToEnd) {
+                            notesViewModel.onEvent(NotesEvent.Archive(currentNote))
+                        }
+                        true
+                    },
+                    positionalThreshold = { 150.dp.toPx() }
+                )
+
+                SwipeToDismissNote(
+                    dismissState = dismissState,
+                    starDrawable = R.drawable.ic_archive,
+                    note = note,
+                    navController = navController
+                )
             }
         }
     }

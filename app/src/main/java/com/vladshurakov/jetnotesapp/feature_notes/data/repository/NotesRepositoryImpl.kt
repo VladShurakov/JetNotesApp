@@ -31,16 +31,16 @@ class NotesRepositoryImpl(private val noteDao: NoteDao) : NotesRepository {
         noteDao.updatePinned(id, pinned)
     }
 
-    override fun getDesc(): Flow<List<Note>> {
-        return noteDao.getDesc().map { listOfNoteEntity ->
+    override fun getDesc(folder: Folder): Flow<List<Note>> {
+        return noteDao.getDesc(folder).map { listOfNoteEntity ->
             listOfNoteEntity.map { noteEntity ->
                 noteEntity.toNote()
             }
         }
     }
 
-    override fun getAsc(): Flow<List<Note>> {
-        return noteDao.getAsc().map { listOfNoteEntity ->
+    override fun getAsc(folder: Folder): Flow<List<Note>> {
+        return noteDao.getAsc(folder).map { listOfNoteEntity ->
             listOfNoteEntity.map { noteEntity ->
                 noteEntity.toNote()
             }
