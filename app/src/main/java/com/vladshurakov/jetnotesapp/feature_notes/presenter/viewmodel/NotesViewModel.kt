@@ -94,7 +94,7 @@ class NotesViewModel @Inject constructor(
 
     private fun getNotes() {
         val orderType = settingsUseCases.getSettings.invoke().orderType
-        notesUseCases.getNotes(orderType = orderType).onEach { notes ->
+        notesUseCases.getNotes(orderType, Folder.NOTES).onEach { notes ->
             _notesState.value = notesState.value.copy(
                 notes = notes,
                 orderType = orderType,

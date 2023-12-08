@@ -49,9 +49,7 @@ class DeletedViewModel @Inject constructor(
     }
 
     private fun getDeletedNotes() {
-        notesUseCases.getNotes(
-            orderType = OrderType.Descending
-        ).onEach { notes ->
+        notesUseCases.getNotes(OrderType.Descending, Folder.DELETED).onEach { notes ->
             _state.value = notes
         }.launchIn(viewModelScope)
     }
