@@ -5,7 +5,7 @@
 - [ ] I've run the code locally and everything works as expected.
 - [ ] 🎬 I've attached a screen recoding or at least screenshots of the changes. 
 
-> Tip: drag & drop the video to the PR description.
+<!-- Tip: drag & drop the video to the PR description. --> 
 
 ## What's changed?
 <!--
@@ -22,7 +22,7 @@ Describe with a few bullets **What's new:**
 - b
 - c
 
-> 💡 Tip: Please, attach screenshots and screen recordings. It helps a lot!
+<!-- 💡 Tip: Please, attach screenshots and screen recordings. It helps a lot! --> 
 
 ## Risk Factors
 
@@ -44,4 +44,4 @@ Check **[JetNotesApp Issues](https://github.com/VladShurakov/JetNotesApp/issues)
 
 - Closes #ISSUE_NUMBER
 
-> Replace `ISSUE_NUMBER` with your issue number (for example Closes #111). If you've done that correctly, you'll see the issue title linked when previewing your PR description.
+<!-- Replace `ISSUE_NUMBER` with your issue number (for example Closes #111). If you've done that correctly, you'll see the issue title linked when previewing your PR description.  --> 
