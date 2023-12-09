@@ -26,6 +26,7 @@ import com.vladshurakov.jetnotesapp.feature_notes.presenter.viewmodel.events.Del
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.DeleteAlertDialog
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.DeletedNotesTopBar
 import com.vladshurakov.jetnotesapp.theme.MainTheme
+import com.vladshurakov.jetnotesapp.util.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,10 +85,12 @@ fun DeletedScreen(
                 )
 
                 SwipeToDismissNote(
+                    note = currentNote,
+                    onClick = {
+                        navController.navigate(Screen.AddEditNote.route + "?id=${currentNote.id}")
+                    },
                     dismissState = dismissState,
                     starDrawable = R.drawable.ic_restore,
-                    note = deletedNote,
-                    navController = navController
                 )
             }
         }

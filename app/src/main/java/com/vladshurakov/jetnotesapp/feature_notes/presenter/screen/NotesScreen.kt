@@ -42,7 +42,7 @@ import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.NotesT
 import com.vladshurakov.jetnotesapp.theme.MainTheme
 import com.vladshurakov.jetnotesapp.util.Screen
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class,)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun NotesScreen(
     navController: NavController, notesViewModel: NotesViewModel = hiltViewModel()
@@ -54,7 +54,7 @@ fun NotesScreen(
         topBar = {
             NotesTopBar(
                 onSort = {
-                    notesViewModel.onEvent(NotesEvent.ChangeOrderType)
+                    notesViewModel.onEvent(NotesEvent.ToggleOrderType)
                 }
             ) {
                 navController.navigate(Screen.Settings.route)
@@ -146,8 +146,7 @@ fun NotesScreen(
                     confirmValueChange = {
                         if (it == DismissValue.DismissedToStart) {
                             notesViewModel.onEvent(NotesEvent.Delete(currentNote))
-                        }
-                        else if (it == DismissValue.DismissedToEnd) {
+                        } else if (it == DismissValue.DismissedToEnd) {
                             notesViewModel.onEvent(NotesEvent.Archive(currentNote))
                         }
                         true
@@ -156,10 +155,15 @@ fun NotesScreen(
                 )
 
                 SwipeToDismissNote(
+                    note = currentNote,
+                    onClick = {
+                        navController.navigate(Screen.AddEditNote.route + "?id=${currentNote.id}")
+                    },
+                    onPin = {
+                        notesViewModel.onEvent(NotesEvent.TogglePin(currentNote))
+                    },
                     dismissState = dismissState,
                     starDrawable = R.drawable.ic_archive,
-                    note = note,
-                    navController = navController
                 )
             }
         }
