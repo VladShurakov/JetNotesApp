@@ -23,6 +23,7 @@ import com.vladshurakov.jetnotesapp.feature_notes.presenter.viewmodel.ArchivedVi
 import com.vladshurakov.jetnotesapp.feature_notes.presenter.viewmodel.events.ArchivedEvent
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.ArchivedNotesTopBar
 import com.vladshurakov.jetnotesapp.theme.MainTheme
+import com.vladshurakov.jetnotesapp.util.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,8 +50,8 @@ fun ArchivedScreen(
             items(
                 items = archivedViewModel.state.value,
                 key = { archivedNote -> archivedNote.id.hashCode() }
-            ) { archivedNotes ->
-                val currentNote by rememberUpdatedState(archivedNotes)
+            ) { archivedNote ->
+                val currentNote by rememberUpdatedState(archivedNote)
                 val dismissState = rememberDismissState(
                     confirmValueChange = {
                         if (it == DismissValue.DismissedToStart) {
@@ -65,10 +66,12 @@ fun ArchivedScreen(
                 )
 
                 SwipeToDismissNote(
+                    note = currentNote,
+                    onClick = {
+                        navController.navigate(Screen.AddEditNote.route + "?id=${currentNote.id}")
+                    },
                     dismissState = dismissState,
                     starDrawable = R.drawable.ic_unarchive,
-                    note = archivedNotes,
-                    navController = navController
                 )
             }
         }

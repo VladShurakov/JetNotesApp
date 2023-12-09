@@ -43,7 +43,7 @@ class NotesViewModel @Inject constructor(
 
     fun onEvent(event: NotesEvent) {
         when (event) {
-            NotesEvent.ChangeOrderType -> {
+            NotesEvent.ToggleOrderType -> {
                 _notesState.value.orderType = when (_notesState.value.orderType) {
                     OrderType.Descending -> OrderType.Ascending
                     OrderType.Ascending -> OrderType.Descending
@@ -86,6 +86,14 @@ class NotesViewModel @Inject constructor(
                     if (event.note.id == null)
                         return@launch
                     notesUseCases.moveTo(event.note.id, Folder.ARCHIVED)
+                }
+            }
+
+            is NotesEvent.TogglePin -> {
+                viewModelScope.launch {
+                    if (event.note.id == null)
+                        return@launch
+                    notesUseCases.updatePinned(event.note.id, event.note.pinned)
                 }
             }
         }

@@ -15,19 +15,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.vladshurakov.jetnotesapp.R
 import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Note
 import com.vladshurakov.jetnotesapp.theme.MainTheme
-import com.vladshurakov.jetnotesapp.util.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SwipeToDismissNote(
-    dismissState: DismissState,
-    @DrawableRes starDrawable: Int,
-    note: Note,
-    navController: NavController
+    note: Note, onClick: () -> Unit = {}, onPin: (() -> Unit)? = null,
+    dismissState: DismissState, @DrawableRes starDrawable: Int,
 ) {
     SwipeToDismiss(
         state = dismissState,
@@ -66,14 +62,9 @@ fun SwipeToDismissNote(
         },
         dismissContent = {
             NoteView(
-                title = note.title,
-                content = note.content,
-                timestamp = note.timestamp,
-                onClick = {
-                    navController.navigate(
-                        Screen.AddEditNote.route + "?id=${note.id}"
-                    )
-                }
+                note = note,
+                onClick = (onClick),
+                onPin = (onPin)
             )
         }
     )
