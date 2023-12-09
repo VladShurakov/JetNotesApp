@@ -53,6 +53,7 @@ fun NotesScreen(
     Scaffold(
         topBar = {
             NotesTopBar(
+                orderType = notesViewModel.notesState.value.orderType,
                 onSort = {
                     notesViewModel.onEvent(NotesEvent.ToggleOrderType)
                 }
