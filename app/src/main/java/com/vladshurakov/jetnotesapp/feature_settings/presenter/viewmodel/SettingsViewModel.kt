@@ -30,8 +30,11 @@ class SettingsViewModel @Inject constructor(
     fun onEvent(event: SettingsEvent) {
         when (event) {
             is SettingsEvent.SaveSettings -> {
-                settingsUseCases.saveSettings.invoke(settingsBundle = event.settingsBundle)
-                _settingsBundle.value = event.settingsBundle
+                saveSettings(event.settingsBundle)
+            }
+
+            is SettingsEvent.InsertNotes -> {
+                insertNotes(event.notes)
             }
         }
     }
@@ -40,7 +43,12 @@ class SettingsViewModel @Inject constructor(
         return notesUseCases.getAllNotes.invoke()
     }
 
-    fun insert(notes: List<Note>) {
+    private fun saveSettings(settingsBundle: SettingsBundle){
+        settingsUseCases.saveSettings.invoke(settingsBundle = settingsBundle)
+        _settingsBundle.value = settingsBundle
+    }
+
+    private fun insertNotes(notes: List<Note>) {
         viewModelScope.launch {
             notesUseCases.insertNotes(notes)
         }

@@ -42,14 +42,12 @@ import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.Settin
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.SettingsThemeDialog
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.SettingsTopBar
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.SettingsView
+import com.vladshurakov.jetnotesapp.feature_settings.presenter.viewmodel.SettingsEvent
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.viewmodel.SettingsViewModel
 import com.vladshurakov.jetnotesapp.theme.MainTheme
 import com.vladshurakov.jetnotesapp.theme.MainTheme.colors
 import com.vladshurakov.jetnotesapp.util.Screen
 import java.lang.reflect.Type
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @Composable
 fun SettingsScreen(
@@ -59,7 +57,7 @@ fun SettingsScreen(
 ) {
 
     val exportDataLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument()
+        ActivityResultContracts.CreateDocument("application/json")
     ) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
         val jsonString = Gson().toJson(settingsViewModel.getAll())
@@ -67,7 +65,6 @@ fun SettingsScreen(
             it?.bufferedWriter()?.apply {
                 write(jsonString)
                 flush()
-                close()
             }
         }
     }
@@ -80,12 +77,11 @@ fun SettingsScreen(
             it?.bufferedReader()?.readText() ?: "[]"
         }
         val type: Type = object : TypeToken<List<Note>>() {}.type
-        val notes: MutableList<Note> =
-            Gson().fromJson<List<Note>?>(jsonString, type).toMutableList()
-        notes.forEachIndexed { index, note ->
+        val notes = Gson().fromJson<List<Note>>(jsonString, type).toMutableList()
+        notes.onEachIndexed { index, note ->
             notes[index] = note.copy(id = null)
         }
-        settingsViewModel.insert(notes)
+        settingsViewModel.onEvent(SettingsEvent.InsertNotes(notes))
     }
 
     val isStyleDialogOpen = remember {
@@ -261,11 +257,7 @@ fun SettingsScreen(
                 )
 
                 TextButton(
-                    onClick = {
-                        val currentTime =
-                            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                        exportDataLauncher.launch("JetNotesBackup-${currentTime}.json")
-                    },
+                    onClick = { exportDataLauncher.launch("JetNotesBackup") },
                     shape = RectangleShape,
                     contentPadding = PaddingValues(start = 18.dp),
                     modifier = Modifier
@@ -285,7 +277,7 @@ fun SettingsScreen(
                 }
 
                 TextButton(
-                    onClick = { importDataLauncher.launch(arrayOf("*/*")) },
+                    onClick = { importDataLauncher.launch(arrayOf("application/json")) },
                     shape = RectangleShape,
                     contentPadding = PaddingValues(start = 18.dp),
                     modifier = Modifier

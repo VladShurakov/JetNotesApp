@@ -13,8 +13,8 @@ android {
         applicationId = "com.vladshurakov.jetnotesapp"
         minSdk = 26
         targetSdk = 34
-        versionCode = 6
-        versionName = "1.2.0"
+        versionCode = 5
+        versionName = "1.1.2"
         resourceConfigurations += listOf("en")
 
         vectorDrawables {

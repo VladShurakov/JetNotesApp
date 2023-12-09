@@ -9,8 +9,8 @@ import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.DeleteNote
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.GetAllNotes
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.GetNote
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.GetNotes
-import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.InsertNotes
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.InsertNote
+import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.InsertNotes
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.MoveNoteToFolder
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.NotesUseCases
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.SearchNotes
@@ -38,7 +38,7 @@ object AppModule {
             context = context,
             klass = NoteDatabase::class.java,
             name = "notes-database"
-        ).build()
+        ).allowMainThreadQueries().build()
     }
 
     @Provides
