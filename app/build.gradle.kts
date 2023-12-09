@@ -13,8 +13,8 @@ android {
         applicationId = "com.vladshurakov.jetnotesapp"
         minSdk = 26
         targetSdk = 34
-        versionCode = 5
-        versionName = "1.1.2"
+        versionCode = 6
+        versionName = "1.2.0"
         resourceConfigurations += listOf("en")
 
         vectorDrawables {
@@ -70,6 +70,9 @@ dependencies {
 
     // Pretty Time
     implementation ("org.ocpsoft.prettytime:prettytime:5.0.4.Final")
+
+    // Gson
+    implementation("com.google.code.gson:gson:2.10.1")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

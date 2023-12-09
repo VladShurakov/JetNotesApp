@@ -18,9 +18,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.vladshurakov.jetnotesapp.feature_notes.presenter.screen.EditScreen
 import com.vladshurakov.jetnotesapp.feature_notes.presenter.screen.ArchivedScreen
 import com.vladshurakov.jetnotesapp.feature_notes.presenter.screen.DeletedScreen
+import com.vladshurakov.jetnotesapp.feature_notes.presenter.screen.EditScreen
 import com.vladshurakov.jetnotesapp.feature_notes.presenter.screen.NotesScreen
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.screen.SettingsScreen
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.viewmodel.SettingsEvent
@@ -92,7 +92,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = Screen.Settings.route) {
                         SettingsScreen(
                             navController = navController,
-                            settingsBundle = settingsBundle,
+                            settingsViewModel = settingsViewModel,
                             onSettingsChanged = { newSettingsBundle ->
                                 settingsBundle = newSettingsBundle
                                 settingsViewModel.onEvent(SettingsEvent.SaveSettings(settingsBundle))

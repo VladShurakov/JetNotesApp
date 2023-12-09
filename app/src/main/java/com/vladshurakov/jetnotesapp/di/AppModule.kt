@@ -6,8 +6,10 @@ import com.vladshurakov.jetnotesapp.feature_notes.data.data_source.NoteDatabase
 import com.vladshurakov.jetnotesapp.feature_notes.data.repository.NotesRepositoryImpl
 import com.vladshurakov.jetnotesapp.feature_notes.domain.repository.NotesRepository
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.DeleteNote
+import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.GetAllNotes
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.GetNote
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.GetNotes
+import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.InsertNotes
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.InsertNote
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.MoveNoteToFolder
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.NotesUseCases
@@ -50,6 +52,8 @@ object AppModule {
     fun provideNotesUseCases(notesRepository: NotesRepository): NotesUseCases {
         return NotesUseCases(
             insertNote = InsertNote(notesRepository),
+            insertNotes = InsertNotes(notesRepository),
+            getAllNotes = GetAllNotes(notesRepository),
             getNote = GetNote(notesRepository),
             deleteNote = DeleteNote(notesRepository),
             moveTo = MoveNoteToFolder(notesRepository),

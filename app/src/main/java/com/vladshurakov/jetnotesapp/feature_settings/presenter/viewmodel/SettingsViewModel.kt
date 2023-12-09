@@ -2,9 +2,13 @@ package com.vladshurakov.jetnotesapp.feature_settings.presenter.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Note
+import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.NotesUseCases
 import com.vladshurakov.jetnotesapp.feature_settings.domain.models.SettingsBundle
 import com.vladshurakov.jetnotesapp.feature_settings.domain.usecase.SettingsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /*
@@ -12,7 +16,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val settingsUseCases: SettingsUseCases
+    private val settingsUseCases: SettingsUseCases,
+    private val notesUseCases: NotesUseCases
 ) : ViewModel() {
 
     private val _settingsBundle = mutableStateOf(SettingsBundle())
@@ -28,6 +33,16 @@ class SettingsViewModel @Inject constructor(
                 settingsUseCases.saveSettings.invoke(settingsBundle = event.settingsBundle)
                 _settingsBundle.value = event.settingsBundle
             }
+        }
+    }
+
+    fun getAll(): List<Note> {
+        return notesUseCases.getAllNotes.invoke()
+    }
+
+    fun insert(notes: List<Note>) {
+        viewModelScope.launch {
+            notesUseCases.insertNotes(notes)
         }
     }
 }

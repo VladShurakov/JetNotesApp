@@ -14,6 +14,12 @@ interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(noteEntity: NoteEntity): Long
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(noteEntities: List<NoteEntity>): List<Long>
+
+    @Query("SELECT * FROM note")
+    fun getAll(): List<NoteEntity>
+
     @Query("SELECT * FROM note WHERE id = :id")
     suspend fun get(id: Long): NoteEntity?
 
