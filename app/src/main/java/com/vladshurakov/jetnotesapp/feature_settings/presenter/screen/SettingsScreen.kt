@@ -76,16 +76,20 @@ fun SettingsScreen(
         val json = navController.context.contentResolver.openInputStream(uri).use {
             it?.bufferedReader()?.readText() ?: "[]"
         }
-        val type: Type = object : TypeToken<List<Note>>() {}.type
-        val notes = Gson().fromJson<List<Note>>(json, type).toMutableList()
-        /*
+        try {
+            val type: Type = object : TypeToken<List<Note>>() {}.type
+            val notes = Gson().fromJson<List<Note>>(json, type).toMutableList()
+            /*
          * It changes id to null to auto-generate new id
          * (will be duplicated without it)
          */
-        notes.onEachIndexed { index, note ->
-            notes[index] = note.copy(id = null)
+            notes.onEachIndexed { index, note ->
+                notes[index] = note.copy(id = null)
+            }
+            settingsViewModel.onEvent(SettingsEvent.InsertNotes(notes))
+        }catch (e: java.lang.Exception){
+            return@rememberLauncherForActivityResult
         }
-        settingsViewModel.onEvent(SettingsEvent.InsertNotes(notes))
     }
 
     val isStyleDialogOpen = remember {
