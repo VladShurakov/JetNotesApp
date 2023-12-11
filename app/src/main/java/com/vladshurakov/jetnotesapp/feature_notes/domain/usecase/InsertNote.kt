@@ -7,7 +7,7 @@ class InsertNote(private val repository: NotesRepository){
 
     suspend operator fun invoke(note: Note): Long?{
         if (note.title.isBlank() && (note.content.isBlank() || note.content.startsWith(' '))){
-            return null
+            return -1
         }
         if (note.title.isBlank() && note.content.isNotBlank()){
             note.title = "Title"

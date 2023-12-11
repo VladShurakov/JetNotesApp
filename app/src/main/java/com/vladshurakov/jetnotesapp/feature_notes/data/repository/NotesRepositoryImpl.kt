@@ -11,8 +11,15 @@ import kotlinx.coroutines.flow.map
 
 class NotesRepositoryImpl(private val noteDao: NoteDao) : NotesRepository {
     override suspend fun insert(note: Note): Long {
-
         return noteDao.insert(note.toNoteEntity())
+    }
+
+    override suspend fun insert(notes: List<Note>): List<Long> {
+        return noteDao.insert(notes.map { it.toNoteEntity() })
+    }
+
+    override fun getAll(): List<Note> {
+        return noteDao.getAll().map { it.toNote() }
     }
 
     override suspend fun get(id: Long): Note? {

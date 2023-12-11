@@ -14,6 +14,12 @@ interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(noteEntity: NoteEntity): Long
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(noteEntities: List<NoteEntity>): List<Long>
+
+    @Query("SELECT * FROM note")
+    fun getAll(): List<NoteEntity>
+
     @Query("SELECT * FROM note WHERE id = :id")
     suspend fun get(id: Long): NoteEntity?
 
@@ -32,9 +38,17 @@ interface NoteDao {
     @Query("SELECT * FROM note WHERE folder = :folder ORDER BY pinned DESC, timestamp ASC")
     fun getAsc(folder: Folder): Flow<List<NoteEntity>>
 
-    @Query("SELECT * FROM note WHERE (title LIKE '%' || :query || '%' OR content LIKE '%' || :query || '%') ORDER BY pinned DESC, timestamp DESC")
+    @Query(
+        "SELECT * FROM note WHERE " +
+        "(title LIKE '%' || :query || '%' OR content LIKE '%' || :query || '%') " +
+        "AND folder = 'NOTES' ORDER BY pinned DESC, timestamp DESC"
+    )
     fun getDesc(query: String): Flow<List<NoteEntity>>
 
-    @Query("SELECT * FROM note WHERE (title LIKE '%' || :query || '%' OR content LIKE '%' || :query || '%') ORDER BY pinned ASC, timestamp ASC")
+    @Query(
+        "SELECT * FROM note WHERE " +
+        "(title LIKE '%' || :query || '%' OR content LIKE '%' || :query || '%') " +
+        "AND folder = 'NOTES' ORDER BY pinned ASC, timestamp ASC"
+    )
     fun getAsc(query: String): Flow<List<NoteEntity>>
 }
