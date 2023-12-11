@@ -57,10 +57,9 @@ fun NotesTopBar(
                     painter = painterResource(id = R.drawable.ic_order),
                     contentDescription = stringResource(id = R.string.label_order),
                     tint = MainTheme.colors.invertColor,
-                    modifier = Modifier
-                        .graphicsLayer(
+                    modifier = Modifier.graphicsLayer(
                             scaleY = if (orderType == OrderType.Descending) 1f else -1f
-                        )
+                    )
                 )
             }
             IconButton(

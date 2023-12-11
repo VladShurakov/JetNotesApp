@@ -40,6 +40,7 @@ fun TransparentHintTextField(
                 text = hint,
                 style = textStyle,
                 color = MainTheme.colors.secondaryTextColor,
+                fontSize = MainTheme.typography.body.fontSize
             )
         }
     }

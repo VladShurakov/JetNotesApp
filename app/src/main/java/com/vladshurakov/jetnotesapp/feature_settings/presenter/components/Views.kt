@@ -29,7 +29,7 @@ fun SettingsView(
         contentPadding = PaddingValues(start = 16.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .defaultMinSize(minHeight = 72.dp)
+            .defaultMinSize(minHeight = 62.dp)
     ) {
         Column(
             modifier = Modifier

@@ -86,7 +86,12 @@ fun JetNotesTheme(
                 JetNotesSize.Medium -> 16.sp
                 JetNotesSize.Big -> 18.sp
             },
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Medium,
+            lineHeight = when (settingsBundle.size) {
+                JetNotesSize.Small -> 20.sp
+                JetNotesSize.Medium -> 22.sp
+                JetNotesSize.Big -> 24.sp
+            }
         ),
         caption = TextStyle(
             fontSize = when (settingsBundle.size) {

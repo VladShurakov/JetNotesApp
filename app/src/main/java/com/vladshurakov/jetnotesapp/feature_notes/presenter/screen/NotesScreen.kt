@@ -54,9 +54,7 @@ fun NotesScreen(
         topBar = {
             NotesTopBar(
                 orderType = notesViewModel.notesState.value.orderType,
-                onSort = {
-                    notesViewModel.onEvent(NotesEvent.ToggleOrderType)
-                }
+                onSort = { notesViewModel.onEvent(NotesEvent.ToggleOrderType) }
             ) {
                 navController.navigate(Screen.Settings.route)
             }

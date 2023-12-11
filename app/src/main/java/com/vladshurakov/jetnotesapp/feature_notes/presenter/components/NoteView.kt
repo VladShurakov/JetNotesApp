@@ -1,5 +1,6 @@
 package com.vladshurakov.jetnotesapp.feature_notes.presenter.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -42,12 +43,13 @@ fun NoteView(
         contentPadding = PaddingValues(12.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
+            .padding(top = 12.dp)
     ) {
         Row(
             verticalAlignment = Alignment.Top
         ) {
             Column(
+                verticalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.weight(1f)
             ) {
 
@@ -60,8 +62,6 @@ fun NoteView(
                     modifier = Modifier
                         .fillMaxWidth()
                 )
-
-                Spacer(modifier = Modifier.height(6.dp))
 
                 Text(
                     text = if (isContentBlank(content = note.content))
@@ -76,16 +76,15 @@ fun NoteView(
                 Spacer(modifier = Modifier.height(6.dp))
 
                 Text(
-                    text = if (note.timestamp == 0.toLong()) "   " else PrettyTime().format(Date(note.timestamp)),
+                    text = if (note.timestamp == 0.toLong()) "ㅤ"
+                    else PrettyTime().format(Date(note.timestamp)),
                     style = MainTheme.typography.caption,
                     color = MainTheme.colors.secondaryTextColor
                 )
             }
 
             if (onPin != null){
-                IconButton(
-                    onClick = (onPin)
-                ) {
+                IconButton(onClick = (onPin)) {
                     Icon(
                         painter = painterResource(
                             id = if (note.pinned) R.drawable.ic_pinned else R.drawable.ic_unpinned

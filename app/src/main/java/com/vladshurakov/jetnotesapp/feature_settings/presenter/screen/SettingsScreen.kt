@@ -8,9 +8,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -61,12 +60,16 @@ fun SettingsScreen(
         ActivityResultContracts.CreateDocument("application/zip")
     ) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
-        val json = Gson().toJson(settingsViewModel.getAllNotes())
-        navController.context.contentResolver.openOutputStream(uri).use {
-            it?.bufferedWriter()?.apply {
-                write(json)
-                flush()
+        try {
+            val json = Gson().toJson(settingsViewModel.getAllNotes())
+            navController.context.contentResolver.openOutputStream(uri).use {
+                it?.bufferedWriter()?.apply {
+                    write(json)
+                    flush()
+                }
             }
+        } catch (e: Exception){
+            return@rememberLauncherForActivityResult
         }
     }
 
@@ -74,43 +77,33 @@ fun SettingsScreen(
         ActivityResultContracts.OpenDocument()
     ) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
-        val json = navController.context.contentResolver.openInputStream(uri).use {
-            it?.bufferedReader()?.readText() ?: "[]"
-        }
         try {
+            val json = navController.context.contentResolver.openInputStream(uri).use {
+                it?.bufferedReader()?.readText() ?: "[]"
+            }
             val type: Type = object : TypeToken<List<Note>>() {}.type
             val notes = Gson().fromJson<List<Note>>(json, type).toMutableList()
             /*
-         * It changes id to null to auto-generate new id
-         * (will be duplicated without it)
-         */
+            * It changes id to null to auto-generate new id
+            * (will be duplicated without it)
+            */
             notes.onEachIndexed { index, note ->
                 notes[index] = note.copy(id = null)
             }
             settingsViewModel.onEvent(SettingsEvent.InsertNotes(notes))
-        }catch (e: java.lang.Exception){
+        } catch (e: java.lang.Exception) {
             return@rememberLauncherForActivityResult
         }
     }
 
-    val isStyleDialogOpen = remember {
-        mutableStateOf(false)
-    }
-    val isTextSizeDialogOpen = remember {
-        mutableStateOf(false)
-    }
-    val isCornerStyleDialogOpen = remember {
-        mutableStateOf(false)
-    }
-    val isThemeDialogOpen = remember {
-        mutableStateOf(false)
-    }
+    val isStyleDialogOpen = remember { mutableStateOf(false) }
+    val isTextSizeDialogOpen = remember { mutableStateOf(false) }
+    val isCornerStyleDialogOpen = remember { mutableStateOf(false) }
+    val isThemeDialogOpen = remember { mutableStateOf(false) }
 
     if (isStyleDialogOpen.value) {
         SettingsStyleDialog(
-            onCancel = {
-                isStyleDialogOpen.value = false
-            },
+            onCancel = { isStyleDialogOpen.value = false },
             settingsBundle = settingsViewModel.settingsBundle.value,
             onSettingsChanged = onSettingsChanged
         )
@@ -118,9 +111,7 @@ fun SettingsScreen(
 
     if (isTextSizeDialogOpen.value) {
         SettingsTextSizeDialog(
-            onCancel = {
-                isTextSizeDialogOpen.value = false
-            },
+            onCancel = { isTextSizeDialogOpen.value = false },
             settingsBundle = settingsViewModel.settingsBundle.value,
             onSettingsChanged = onSettingsChanged
         )
@@ -128,9 +119,7 @@ fun SettingsScreen(
 
     if (isCornerStyleDialogOpen.value) {
         SettingsCornerStyleDialog(
-            onCancel = {
-                isCornerStyleDialogOpen.value = false
-            },
+            onCancel = { isCornerStyleDialogOpen.value = false },
             settingsBundle = settingsViewModel.settingsBundle.value,
             onSettingsChanged = onSettingsChanged
         )
@@ -138,22 +127,14 @@ fun SettingsScreen(
 
     if (isThemeDialogOpen.value) {
         SettingsThemeDialog(
-            onCancel = {
-                isThemeDialogOpen.value = false
-            },
+            onCancel = { isThemeDialogOpen.value = false },
             settingsBundle = settingsViewModel.settingsBundle.value,
             onSettingsChanged = onSettingsChanged
         )
     }
 
     Scaffold(
-        topBar = {
-            SettingsTopBar(
-                onBack = {
-                    navController.navigateUp()
-                }
-            )
-        }
+        topBar = { SettingsTopBar(onBack = { navController.navigateUp() }) }
     ) { topBarPadding ->
         LazyColumn(
             modifier = Modifier
@@ -165,85 +146,64 @@ fun SettingsScreen(
             item {
 
                 TitleTextView(
-                    name = R.string.appearance,
+                    name = R.string.label_appearance,
                     icon = R.drawable.ic_appearance
                 )
 
                 SettingsView(
-                    onClick = {
-                        isStyleDialogOpen.value = true
-                    },
+                    onClick = { isStyleDialogOpen.value = true },
                     title = stringResource(id = R.string.label_theme_color),
                     selectionText = settingsViewModel.settingsBundle.value.style.name,
                     selectionTextColor = colors.tintColor
                 )
 
                 SettingsView(
-                    onClick = {
-                        isTextSizeDialogOpen.value = true
-                    },
+                    onClick = { isTextSizeDialogOpen.value = true },
                     title = stringResource(id = R.string.label_text_size),
                     selectionText = settingsViewModel.settingsBundle.value.size.name
                 )
 
                 SettingsView(
-                    onClick = {
-                        isCornerStyleDialogOpen.value = true
-                    },
+                    onClick = { isCornerStyleDialogOpen.value = true },
                     title = stringResource(id = R.string.label_card_form),
                     selectionText = settingsViewModel.settingsBundle.value.cornerStyle.name
                 )
 
                 SettingsView(
-                    onClick = {
-                        isThemeDialogOpen.value = true
-                    },
+                    onClick = { isThemeDialogOpen.value = true },
                     title = stringResource(id = R.string.label_app_theme),
                     selectionText = settingsViewModel.settingsBundle.value.theme.name
                 )
 
                 TextButton(
-                    onClick = {
-                        navController.navigate(Screen.DeletedNotes.route)
-                    },
+                    onClick = { navController.navigate(Screen.DeletedNotes.route) },
                     shape = RectangleShape,
                     contentPadding = PaddingValues(start = 18.dp),
                     modifier = Modifier
                         .defaultMinSize(minHeight = 48.dp)
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.label_deleted_notes),
-                            style = MainTheme.typography.body,
-                            color = colors.tintColor
-                        )
-                    }
+                    Text(
+                        text = stringResource(id = R.string.label_deleted_notes),
+                        style = MainTheme.typography.body,
+                        color = colors.tintColor,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
 
                 TextButton(
-                    onClick = {
-                        navController.navigate(Screen.ArchivedNotes.route)
-                    },
+                    onClick = { navController.navigate(Screen.ArchivedNotes.route) },
                     shape = RectangleShape,
                     contentPadding = PaddingValues(start = 18.dp),
-                    modifier = Modifier
-                        .defaultMinSize(minHeight = 48.dp)
+                    modifier = Modifier.defaultMinSize(minHeight = 48.dp)
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.archived_notes),
-                            style = MainTheme.typography.body,
-                            color = colors.tintColor
-                        )
-                    }
+                    Text(
+                        text = stringResource(id = R.string.archived_notes),
+                        style = MainTheme.typography.body,
+                        color = colors.tintColor,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
 
                 Divider(
@@ -251,50 +211,43 @@ fun SettingsScreen(
                     color = colors.secondaryTextColor,
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
-                
+
                 TitleTextView(
-                    name = R.string.export_import_data,
+                    name = R.string.label_export_import_data,
                     icon = R.drawable.ic_zip
                 )
 
+                val exportFileName = stringResource(R.string.export_notes_zip_name)
+
                 TextButton(
-                    onClick = { exportDataLauncher.launch("JetNotesBackup") },
+                    onClick = { exportDataLauncher.launch(exportFileName) },
                     shape = RectangleShape,
                     contentPadding = PaddingValues(start = 18.dp),
                     modifier = Modifier
                         .defaultMinSize(minHeight = 48.dp)
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = "Export notes",
-                            style = MainTheme.typography.body,
-                            color = colors.tintColor
-                        )
-                    }
+                    Text(
+                        text = stringResource(id = R.string.label_export_notes),
+                        style = MainTheme.typography.body,
+                        color = colors.tintColor,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
 
                 TextButton(
                     onClick = { importDataLauncher.launch(arrayOf("application/zip")) },
                     shape = RectangleShape,
                     contentPadding = PaddingValues(start = 18.dp),
-                    modifier = Modifier
-                        .defaultMinSize(minHeight = 48.dp)
+                    modifier = Modifier.defaultMinSize(minHeight = 48.dp)
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = "Import notes",
-                            style = MainTheme.typography.body,
-                            color = colors.tintColor
-                        )
-                    }
+                    Text(
+                        text = stringResource(id = R.string.label_import_notes),
+                        style = MainTheme.typography.body,
+                        color = colors.tintColor,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
 
                 Divider(
@@ -317,55 +270,42 @@ fun SettingsScreen(
                     },
                     shape = RectangleShape,
                     contentPadding = PaddingValues(start = 18.dp),
-                    modifier = Modifier
-                        .defaultMinSize(minHeight = 48.dp)
+                    modifier = Modifier.defaultMinSize(minHeight = 48.dp)
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.label_github),
-                            style = MainTheme.typography.body,
-                            color = colors.tintColor
-                        )
-                    }
+                    Text(
+                        text = stringResource(id = R.string.label_github),
+                        style = MainTheme.typography.body,
+                        color = colors.tintColor,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
 
                 TextButton(
                     onClick = {
-                        openLink(navController.context, "https://sites.google.com/view/jetnotesapp")
+                        openLink(
+                            navController.context,
+                            "https://sites.google.com/view/jetnotesapp"
+                        )
                     },
                     shape = RectangleShape,
                     contentPadding = PaddingValues(start = 18.dp),
-                    modifier = Modifier
-                        .defaultMinSize(minHeight = 48.dp)
+                    modifier = Modifier.defaultMinSize(minHeight = 48.dp)
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.privacy_policy),
-                            style = MainTheme.typography.body,
-                            color = colors.tintColor
-                        )
-                    }
+                    Text(
+                        text = stringResource(id = R.string.privacy_policy),
+                        style = MainTheme.typography.body,
+                        color = colors.tintColor,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
 
-                val versionName = try {
-                    navController.context.packageManager.getPackageInfo(
-                        navController.context.packageName,
-                        0
-                    ).versionName
-                } catch (e: Exception) {
-                    ""
-                }
+                val versionName = navController.context.packageManager.getPackageInfo(
+                    navController.context.packageName, 0).versionName
 
                 Text(
-                    text = "Version $versionName",
+                    text = stringResource(id = R.string.version) + " $versionName",
                     style = MainTheme.typography.body,
                     color = colors.secondaryTextColor,
                     modifier = Modifier

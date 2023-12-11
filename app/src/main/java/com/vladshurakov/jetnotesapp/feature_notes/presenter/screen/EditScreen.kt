@@ -70,19 +70,12 @@ fun EditScreen(
             TransparentHintTextField(
                 text = titleState.text,
                 hint = stringResource(id = R.string.hint_title),
-                onValueChange = {
-                    viewModel.onEvent(EditEvent.EnteredTitle(it))
-                },
-                onFocusChange = {
-                    viewModel.onEvent(EditEvent.ChangeTitleFocus(it))
-                },
+                onValueChange = { viewModel.onEvent(EditEvent.EnteredTitle(it)) },
+                onFocusChange = { viewModel.onEvent(EditEvent.ChangeTitleFocus(it)) },
                 isHintVisible = titleState.isHintVisible,
                 textStyle = MainTheme.typography.title.copy(
-                    color = if (titleState.isHintVisible) {
-                        MainTheme.colors.secondaryTextColor
-                    } else {
-                        MainTheme.colors.primaryTextColor
-                    }
+                    color = if (titleState.isHintVisible) { MainTheme.colors.secondaryTextColor }
+                    else { MainTheme.colors.primaryTextColor }
                 ),
                 singleLine = true
             )
@@ -103,19 +96,12 @@ fun EditScreen(
             TransparentHintTextField(
                 text = contentState.text,
                 hint = stringResource(id = R.string.hint_start_typing),
-                onValueChange = {
-                    viewModel.onEvent(EditEvent.EnteredContent(it))
-                },
-                onFocusChange = {
-                    viewModel.onEvent(EditEvent.ChangeContentFocus(it))
-                },
+                onValueChange = { viewModel.onEvent(EditEvent.EnteredContent(it)) },
+                onFocusChange = { viewModel.onEvent(EditEvent.ChangeContentFocus(it)) },
                 isHintVisible = contentState.isHintVisible,
                 textStyle = MainTheme.typography.body.copy(
-                    color = if (contentState.isHintVisible) {
-                        MainTheme.colors.secondaryTextColor
-                    } else {
-                        MainTheme.colors.primaryTextColor
-                    }
+                    color = if (contentState.isHintVisible) { MainTheme.colors.secondaryTextColor }
+                    else { MainTheme.colors.primaryTextColor }
                 )
             )
         }
