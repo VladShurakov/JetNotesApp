@@ -57,13 +57,13 @@ fun SettingsScreen(
 ) {
 
     val exportDataLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument("application/json")
+        ActivityResultContracts.CreateDocument("application/zip")
     ) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
-        val jsonString = Gson().toJson(settingsViewModel.getAll())
+        val json = Gson().toJson(settingsViewModel.getAllNotes())
         navController.context.contentResolver.openOutputStream(uri).use {
             it?.bufferedWriter()?.apply {
-                write(jsonString)
+                write(json)
                 flush()
             }
         }
@@ -73,11 +73,15 @@ fun SettingsScreen(
         ActivityResultContracts.OpenDocument()
     ) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
-        val jsonString = navController.context.contentResolver.openInputStream(uri).use {
+        val json = navController.context.contentResolver.openInputStream(uri).use {
             it?.bufferedReader()?.readText() ?: "[]"
         }
         val type: Type = object : TypeToken<List<Note>>() {}.type
-        val notes = Gson().fromJson<List<Note>>(jsonString, type).toMutableList()
+        val notes = Gson().fromJson<List<Note>>(json, type).toMutableList()
+        /*
+         * It changes id to null to auto-generate new id
+         * (will be duplicated without it)
+         */
         notes.onEachIndexed { index, note ->
             notes[index] = note.copy(id = null)
         }
@@ -277,7 +281,7 @@ fun SettingsScreen(
                 }
 
                 TextButton(
-                    onClick = { importDataLauncher.launch(arrayOf("application/json")) },
+                    onClick = { importDataLauncher.launch(arrayOf("application/zip")) },
                     shape = RectangleShape,
                     contentPadding = PaddingValues(start = 18.dp),
                     modifier = Modifier

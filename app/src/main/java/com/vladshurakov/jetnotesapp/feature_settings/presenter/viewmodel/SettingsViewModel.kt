@@ -39,7 +39,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun getAll(): List<Note> {
+    fun getAllNotes(): List<Note> {
         return notesUseCases.getAllNotes.invoke()
     }
 
