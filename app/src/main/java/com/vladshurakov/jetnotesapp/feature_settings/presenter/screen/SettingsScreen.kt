@@ -42,6 +42,7 @@ import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.Settin
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.SettingsThemeDialog
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.SettingsTopBar
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.SettingsView
+import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.TitleTextView
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.viewmodel.SettingsEvent
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.viewmodel.SettingsViewModel
 import com.vladshurakov.jetnotesapp.theme.MainTheme
@@ -163,13 +164,9 @@ fun SettingsScreen(
 
             item {
 
-                Text(
-                    text = stringResource(R.string.appearance),
-                    style = MainTheme.typography.title,
-                    color = colors.primaryTextColor,
-                    modifier = Modifier
-                        .padding(start = 18.dp)
-                        .wrapContentHeight(align = Alignment.CenterVertically)
+                TitleTextView(
+                    name = R.string.appearance,
+                    icon = R.drawable.ic_appearance
                 )
 
                 SettingsView(
@@ -254,14 +251,10 @@ fun SettingsScreen(
                     color = colors.secondaryTextColor,
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
-
-                Text(
-                    text = stringResource(id = R.string.export_import_data),
-                    style = MainTheme.typography.title,
-                    color = colors.primaryTextColor,
-                    modifier = Modifier
-                        .padding(start = 18.dp, top = 12.dp)
-                        .wrapContentHeight(align = Alignment.CenterVertically)
+                
+                TitleTextView(
+                    name = R.string.export_import_data,
+                    icon = R.drawable.ic_zip
                 )
 
                 TextButton(
@@ -310,13 +303,9 @@ fun SettingsScreen(
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
 
-                Text(
-                    text = stringResource(id = R.string.label_about),
-                    style = MainTheme.typography.title,
-                    color = colors.primaryTextColor,
-                    modifier = Modifier
-                        .padding(start = 18.dp, top = 12.dp)
-                        .wrapContentHeight(align = Alignment.CenterVertically)
+                TitleTextView(
+                    name = R.string.label_about,
+                    icon = R.drawable.ic_about
                 )
 
                 TextButton(
