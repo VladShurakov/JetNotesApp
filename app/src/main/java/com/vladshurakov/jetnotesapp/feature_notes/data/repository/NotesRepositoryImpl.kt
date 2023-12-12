@@ -2,32 +2,29 @@ package com.vladshurakov.jetnotesapp.feature_notes.data.repository
 
 import com.vladshurakov.jetnotesapp.feature_notes.data.data_source.NoteDao
 import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Folder
-import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Note
-import com.vladshurakov.jetnotesapp.feature_notes.domain.models.toNote
-import com.vladshurakov.jetnotesapp.feature_notes.domain.models.toNoteEntity
+import com.vladshurakov.jetnotesapp.feature_notes.domain.models.NoteEntity
 import com.vladshurakov.jetnotesapp.feature_notes.domain.repository.NotesRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class NotesRepositoryImpl(private val noteDao: NoteDao) : NotesRepository {
-    override suspend fun insert(note: Note): Long {
-        return noteDao.insert(note.toNoteEntity())
+    override suspend fun insert(note: NoteEntity): Long {
+        return noteDao.insert(note)
     }
 
-    override suspend fun insert(notes: List<Note>): List<Long> {
-        return noteDao.insert(notes.map { it.toNoteEntity() })
+    override suspend fun insert(notes: List<NoteEntity>): List<Long> {
+        return noteDao.insert(notes)
     }
 
-    override fun getAll(): List<Note> {
-        return noteDao.getAll().map { it.toNote() }
+    override fun getAll(): List<NoteEntity> {
+        return noteDao.getAll()
     }
 
-    override suspend fun get(id: Long): Note? {
-        return noteDao.get(id)?.toNote()
+    override suspend fun get(id: Long): NoteEntity? {
+        return noteDao.get(id)
     }
 
-    override suspend fun delete(note: Note) {
-        noteDao.delete(note.toNoteEntity())
+    override suspend fun delete(note: NoteEntity) {
+        noteDao.delete(note)
     }
 
     override suspend fun moveTo(id: Long, folder: Folder) {
@@ -38,35 +35,19 @@ class NotesRepositoryImpl(private val noteDao: NoteDao) : NotesRepository {
         noteDao.updatePinned(id, pinned)
     }
 
-    override fun getDesc(folder: Folder): Flow<List<Note>> {
-        return noteDao.getDesc(folder).map { listOfNoteEntity ->
-            listOfNoteEntity.map { noteEntity ->
-                noteEntity.toNote()
-            }
-        }
+    override fun getDesc(folder: Folder): Flow<List<NoteEntity>> {
+        return noteDao.getDesc(folder)
     }
 
-    override fun getAsc(folder: Folder): Flow<List<Note>> {
-        return noteDao.getAsc(folder).map { listOfNoteEntity ->
-            listOfNoteEntity.map { noteEntity ->
-                noteEntity.toNote()
-            }
-        }
+    override fun getAsc(folder: Folder): Flow<List<NoteEntity>> {
+        return noteDao.getAsc(folder)
     }
 
-    override fun getDesc(query: String): Flow<List<Note>> {
-        return noteDao.getDesc(query).map { listOfNoteEntity ->
-            listOfNoteEntity.map { noteEntity ->
-                noteEntity.toNote()
-            }
-        }
+    override fun getDesc(query: String): Flow<List<NoteEntity>> {
+        return noteDao.getDesc(query)
     }
 
-    override fun getAsc(query: String): Flow<List<Note>> {
-        return noteDao.getAsc(query).map { listOfNoteEntity ->
-            listOfNoteEntity.map { noteEntity ->
-                noteEntity.toNote()
-            }
-        }
+    override fun getAsc(query: String): Flow<List<NoteEntity>> {
+        return noteDao.getAsc(query)
     }
 }

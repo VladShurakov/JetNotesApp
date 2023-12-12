@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Folder
-import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Note
+import com.vladshurakov.jetnotesapp.feature_notes.domain.models.NoteEntity
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.NotesUseCases
 import com.vladshurakov.jetnotesapp.feature_notes.presenter.viewmodel.events.DeletedEvent
 import com.vladshurakov.jetnotesapp.util.OrderType
@@ -23,8 +23,8 @@ class DeletedViewModel @Inject constructor(
     private val notesUseCases: NotesUseCases
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(emptyList<Note>())
-    val state: State<List<Note>> = _state
+    private val _state = mutableStateOf(emptyList<NoteEntity>())
+    val state: State<List<NoteEntity>> = _state
 
     init {
         getDeletedNotes()

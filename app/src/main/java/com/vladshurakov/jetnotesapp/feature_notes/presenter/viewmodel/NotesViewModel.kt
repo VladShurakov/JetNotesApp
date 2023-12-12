@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Folder
-import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Note
+import com.vladshurakov.jetnotesapp.feature_notes.domain.models.NoteEntity
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.NotesUseCases
 import com.vladshurakov.jetnotesapp.feature_notes.presenter.viewmodel.events.NotesEvent
 import com.vladshurakov.jetnotesapp.feature_settings.domain.usecase.SettingsUseCases
@@ -20,7 +20,7 @@ import javax.inject.Inject
  * State for the Notes screen
  */
 data class NotesState(
-    var notes: List<Note> = emptyList(),
+    var notes: List<NoteEntity> = emptyList(),
     var orderType: OrderType = OrderType.Descending,
     var query: String = ""
 )

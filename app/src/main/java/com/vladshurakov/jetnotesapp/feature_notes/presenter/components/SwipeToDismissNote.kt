@@ -16,13 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.vladshurakov.jetnotesapp.R
-import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Note
+import com.vladshurakov.jetnotesapp.feature_notes.domain.models.NoteEntity
 import com.vladshurakov.jetnotesapp.theme.MainTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SwipeToDismissNote(
-    note: Note, onClick: () -> Unit = {}, onPin: (() -> Unit)? = null,
+    note: NoteEntity, onClick: () -> Unit = {}, onPin: (() -> Unit)? = null,
     dismissState: DismissState, @DrawableRes starDrawable: Int,
 ) {
     SwipeToDismiss(

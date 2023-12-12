@@ -22,14 +22,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.vladshurakov.jetnotesapp.R
-import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Note
+import com.vladshurakov.jetnotesapp.feature_notes.domain.models.NoteEntity
 import com.vladshurakov.jetnotesapp.theme.MainTheme
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.Date
 
 @Composable
 fun NoteView(
-    note: Note = Note(title = "ㅤ", content = "ㅤ", timestamp = 0), onClick: () -> Unit = {},
+    note: NoteEntity = NoteEntity(title = "ㅤ", content = "ㅤ", timestamp = 0), onClick: () -> Unit = {},
     onPin: (() -> Unit)? = null, color: Color = MainTheme.colors.secondaryBackground
 ) {
     fun isContentBlank(content: String): Boolean = content.isBlank() || content.isEmpty()

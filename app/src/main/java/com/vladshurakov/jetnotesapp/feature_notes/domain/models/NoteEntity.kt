@@ -13,11 +13,3 @@ data class NoteEntity(
     @ColumnInfo(name = "content")    val content: String,
     @PrimaryKey(autoGenerate = true) val id: Long? = null,
 )
-
-// Convert NoteEntity to Note
-fun NoteEntity.toNote(): Note{
-    return Note(
-        pinned = pinned, folder = folder, title = title,
-        timestamp = timestamp, content = content, id = id
-    )
-}

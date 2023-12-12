@@ -3,7 +3,7 @@ package com.vladshurakov.jetnotesapp.feature_settings.presenter.viewmodel
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Note
+import com.vladshurakov.jetnotesapp.feature_notes.domain.models.NoteEntity
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.NotesUseCases
 import com.vladshurakov.jetnotesapp.feature_settings.domain.models.SettingsBundle
 import com.vladshurakov.jetnotesapp.feature_settings.domain.usecase.SettingsUseCases
@@ -39,7 +39,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun getAllNotes(): List<Note> {
+    fun getAllNotes(): List<NoteEntity> {
         return notesUseCases.getAllNotes.invoke()
     }
 
@@ -48,7 +48,7 @@ class SettingsViewModel @Inject constructor(
         _settingsBundle.value = settingsBundle
     }
 
-    private fun insertNotes(notes: List<Note>) {
+    private fun insertNotes(notes: List<NoteEntity>) {
         viewModelScope.launch {
             notesUseCases.insertNotes(notes)
         }

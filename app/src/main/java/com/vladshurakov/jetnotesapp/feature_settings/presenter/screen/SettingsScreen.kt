@@ -33,7 +33,7 @@ import androidx.navigation.NavController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.vladshurakov.jetnotesapp.R
-import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Note
+import com.vladshurakov.jetnotesapp.feature_notes.domain.models.NoteEntity
 import com.vladshurakov.jetnotesapp.feature_settings.domain.models.SettingsBundle
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.SettingsCornerStyleDialog
 import com.vladshurakov.jetnotesapp.feature_settings.presenter.components.SettingsStyleDialog
@@ -81,8 +81,8 @@ fun SettingsScreen(
             val json = navController.context.contentResolver.openInputStream(uri).use {
                 it?.bufferedReader()?.readText() ?: "[]"
             }
-            val type: Type = object : TypeToken<List<Note>>() {}.type
-            val notes = Gson().fromJson<List<Note>>(json, type).toMutableList()
+            val type: Type = object : TypeToken<List<NoteEntity>>() {}.type
+            val notes = Gson().fromJson<List<NoteEntity>>(json, type).toMutableList()
             /*
             * It changes id to null to auto-generate new id
             * (will be duplicated without it)

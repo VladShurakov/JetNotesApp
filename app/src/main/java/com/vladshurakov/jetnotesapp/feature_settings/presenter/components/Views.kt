@@ -32,8 +32,7 @@ fun SettingsView(
             .defaultMinSize(minHeight = 62.dp)
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
 

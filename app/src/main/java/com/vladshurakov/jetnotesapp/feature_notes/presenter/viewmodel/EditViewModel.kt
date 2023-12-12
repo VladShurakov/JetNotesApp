@@ -8,7 +8,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Folder
-import com.vladshurakov.jetnotesapp.feature_notes.domain.models.Note
+import com.vladshurakov.jetnotesapp.feature_notes.domain.models.NoteEntity
 import com.vladshurakov.jetnotesapp.feature_notes.domain.usecase.NotesUseCases
 import com.vladshurakov.jetnotesapp.feature_notes.presenter.viewmodel.events.EditEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -110,7 +110,7 @@ class EditViewModel @Inject constructor(
                 }
                 viewModelScope.launch {
                     currentNoteId = notesUseCases.insertNote(
-                        Note(
+                        NoteEntity(
                             pinned = pinned,
                             folder = folder,
                             title = noteTitle.value.text,
